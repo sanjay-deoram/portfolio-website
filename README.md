@@ -1,34 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# sanjaydeoram.com
 
-## Getting Started
+Sanjay Deoram's portfolio site — a quiet, typographic, single-page site built with
+Next.js (App Router), TypeScript and Tailwind CSS v4.
 
-First, run the development server:
+See `DESIGN.md` for the design system and `CLAUDE.md` for the working rules.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Scripts
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+| Script                 | What it does                                  |
+| ---------------------- | ---------------------------------------------- |
+| `npm run dev`          | Local dev server                                |
+| `npm run build`        | Production build                                |
+| `npm run start`        | Serve the production build                      |
+| `npm run lint`         | ESLint (flat config)                            |
+| `npm run typecheck`    | `tsc --noEmit`                                  |
+| `npm run test:ui`      | Playwright UI smoke tests (see below)           |
+| `npm run test:ui:headed` | Same, with a visible browser                 |
+| `npm run test:ui:report` | Open the last Playwright HTML report         |
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Verifying UI changes
 
-## Learn More
+This project uses Playwright as a screenshot/smoke harness, not a visual-diff tool:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run test:ui
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Then look at `test-results/screens/desktop.png` and `test-results/screens/mobile.png` to
+eyeball the result. The test also checks structure (sections, testids, image counts) —
+see `DESIGN.md` §8 for the full contract.

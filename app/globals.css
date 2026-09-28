@@ -44,6 +44,8 @@
   --animate-fade-up: fade-up 500ms var(--ease-out-strong) both;
   --animate-caret-blink: caret-blink 1s step-end infinite;
   --animate-nav-in: nav-in 500ms var(--ease-out-strong) 600ms both;
+  /* Name glare: linear on purpose — it's a constant-speed sweep, not an entrance. */
+  --animate-shine: shine 5s linear 4s infinite both;
 
   @keyframes fade-up {
     from {
@@ -63,6 +65,17 @@
     }
   }
 
+  /* 150% → -50% on a 200%-wide gradient: the highlight enters off the right edge
+     and leaves off the left, so the loop restarts with no visible jump. */
+  @keyframes shine {
+    from {
+      background-position: 150% center;
+    }
+    to {
+      background-position: -50% center;
+    }
+  }
+
   @keyframes caret-blink {
     0%,
     50% {
@@ -78,6 +91,25 @@
 /* ---------------------------------------------------------------------- */
 /* Typography utilities — DESIGN.md §2. Mobile-first; md column at >=768px */
 /* ---------------------------------------------------------------------- */
+
+/* Hero name glare (port of React Bits' Shiny Text, as on the reference): an
+   ink-3 highlight sweeps across ink text. Apply with `motion-safe:` so reduced
+   motion gets plain text. DESIGN.md §6. */
+@utility shine {
+  background-image: linear-gradient(
+    140deg,
+    var(--color-ink) 0%,
+    var(--color-ink) 35%,
+    var(--color-ink-3) 50%,
+    var(--color-ink) 65%,
+    var(--color-ink) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: var(--animate-shine);
+}
 
 @utility type-heading-lg {
   font-family: var(--font-heading);

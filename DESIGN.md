@@ -104,8 +104,9 @@ lines, dashed 8px on / 8px off, color `hairline`:
 `repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 16px)`, wrapped in `md:px-4`.
 
 **Hero columns** (≥ md): left `w-[203px]`, gap `165px`, right `w-[352px]`
-(16 + 203 + 165 + 352 = 736 → aligns with grid line pairs). Experience rows reuse the
-exact same columns so dates and roles sit on the same verticals as the hero.
+(16 + 203 + 165 + 352 = 736 → aligns with grid line pairs). Experience rows use their
+own split: details `w-[475px]` on the left (16 → 491 line), `gap-4` (the 491/507 pair),
+dates `flex-1 text-right` in 507 → 736.
 
 Vertical rhythm (px):
 
@@ -138,10 +139,10 @@ Vertical rhythm (px):
   - (md only) Nav pills: `type-cta rounded-pill px-4 py-3 bg-glass backdrop-blur-lg text-ink`,
     `gap-2`. Each `data-testid="nav-pill"`.
   - Statement — desktop `type-heading-lg` with explicit `<br/>` line breaks; mobile
-    `type-heading-sm` single paragraph that opens with "Currently at **MPAC**" (company
+    `type-heading-sm` single paragraph that opens with "Currently at **PVX Plus**" (company
     in `ink-3`). Both wrapped in `<TextReveal>`. `data-testid="hero-statement"` on the
     visible one per breakpoint.
-  - (md only) Sub-label: `type-label text-ink-3` "currently at <a underline underline-offset-2>mpac</a>"
+  - (md only) Sub-label: `type-label text-ink-3` "currently at <a underline underline-offset-2>pvx plus</a>"
   - (mobile only) CTA row `flex gap-3`: primary pill `bg-ink text-canvas`, secondary
     pill `bg-surface-2 text-ink`. `data-testid="mobile-cta"`.
 
@@ -182,9 +183,10 @@ beside the arrow. Separator after the row.
 ### Experience (`#experience`)
 - Heading `p.type-label.text-ink-3 md:px-4` "Experience"
 - Each row (`data-testid="experience-row"`): `flex flex-col gap-2 py-8
-  md:flex-row md:gap-[165px] md:px-4 md:py-10`
-  - Left (`md:w-[203px] shrink-0`): dates, `type-label text-ink-3`, e.g. "2023 — 2024"
-  - Right (`md:w-[352px] flex-col gap-1`):
+  md:flex-row-reverse md:gap-4 md:px-4 md:py-10`
+  - Dates (first in DOM; right column on desktop, `md:flex-1 md:text-right`,
+    label above the role on mobile): `type-label text-ink-3`, e.g. "2023 — 2024"
+  - Details (left column on desktop, `md:w-[475px] shrink-0`): logo tile + `flex-col gap-1`:
     - Role `h3.type-heading-sm.text-ink`
     - Company `p.type-label.text-ink-3` (linked with `underline underline-offset-2` when a URL exists)
     - Summary `p.type-body-sm.text-ink-2 mt-2`
@@ -211,10 +213,10 @@ It is a scroll-spy table of contents.
   `w-[176px]`, `left-[calc(50%-608px)]` — its right edge sits 56px left of the 752px frame
   at every viewport width (at 1280px it starts 32px from the screen edge). Fixed width so
   folding a section never shifts the trunk.
-- **Sections** (page order, all open by default): **Experience** (MPAC, Nventure, Codeium,
-  Rubicon) · **Projects** (MultiPost, AskDocAI, Geass, GoatApp) · **Education**
+- **Sections** (page order, all open by default): **Experience** (PVX Plus, MPAC, Nventure, Codeium,
+  Rubicon) · **Projects** (RateMyOrg, MultiPost, AskDocAI, Geass, GoatApp) · **Education**
   ([Ontario Tech emblem 16px] Ontario Tech).
-  Labels come from `content/site.ts` (`projects[].name`, `experience[].company`,
+  Labels come from `content/site.ts` (`projects[].name`, `experience[].navLabel ?? company`,
   `sideNav.*`). Children link to `#project-<id>`, `#experience-<id>`, `#education-<id>`.
 - **Look (tokens only):** rail/trunk/branches `stroke`; idle labels `ink-3`; active child
   label, its drawn line and the rail marker `ink`. Section heads `type-label`; children
@@ -253,7 +255,9 @@ Arrow-up-right is 24×24.
 
 Principles (Emil Kowalski): animate only when it has a purpose; ease-out for things
 entering; custom curves, never `ease-in`; only `transform`, `opacity`, `clip-path`;
-everything off under `prefers-reduced-motion`.
+everything off under `prefers-reduced-motion`. One named exception: the hero name glare
+animates `background-position` (paint-only, no layout) because a text-clipped gradient
+can't be moved any other way.
 
 | Token                 | Value                              |
 | --------------------- | ---------------------------------- |
@@ -264,6 +268,7 @@ everything off under `prefers-reduced-motion`.
 | Moment | What | Timing |
 | --- | --- | --- |
 | Hover (name) | Avatar: `opacity 0→1`, `translateY 8px→0`, `scale 0.94→1` from bottom-left (desktop only) | 800ms `ease-standard` — matches the reference; decorative, so slow is fine |
+| Ambient | Name **glare** (`motion-safe:shine` on a span inside `hero-name`): 140° gradient `ink → ink-3 → ink` clipped to the text, `background-size: 200%`, `background-position 150% → -50%` | 5s `linear`, loops, 4s delay (after the hero intro) — matches the reference |
 | Load (once) | Hero left/right blocks fade up: `opacity 0→1`, `translateY 8px→0` | 500ms `ease-out-strong`, 80ms stagger |
 | Load (once) | Role types out, then caret blinks (`step-end`, 1s) | 400ms delay, 45ms/char |
 | Load (once) | Nav pills slide out from behind the first pill (pill *i* starts translated left by the summed width+gap of pills before it; z-index decreases left→right) | 550ms `ease-out-strong`, 250ms delay |

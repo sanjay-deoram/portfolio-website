@@ -22,6 +22,7 @@ export type Role = {
   dates: string;
   title: string;
   company: string;
+  navLabel?: string; // side nav label when `company` is too wide for the gutter
   companyUrl?: string;
   logo?: Logo;
   summary: string;
@@ -31,7 +32,7 @@ export const site = {
   name: "Sanjay Deoram",
   role: "software developer",
   location: "toronto",
-  current: { company: "mpac", url: "https://www.mpac.ca" },
+  current: { company: "pvx plus", url: "https://home.pvxplus.com" },
   // TODO(sanjay): confirm the email you want public — this one is from the old resume.
   email: "sanjay.deoram@ontariotechu.net",
   resume: "/Resume.pdf",
@@ -48,7 +49,7 @@ export const site = {
   ],
   // Mobile statement: `lead` renders in ink-3, `rest` in ink.
   statementMobile: {
-    lead: "MPAC",
+    lead: "PVX Plus",
     prefix: "Currently at ",
     rest: ", I turn messy workflows into software that just works. Full-stack, practical and fast.",
   },
@@ -73,6 +74,16 @@ export const socials: NavLink[] = [
 ];
 
 export const projects: Project[] = [
+  {
+    id: "ratemyorg",
+    name: "RateMyOrg",
+    title: "Honest company\nreviews",
+    description:
+      "Anonymous company reviews and interview experiences. No sign-in, no takedowns.",
+    href: "https://rate-my-org.com",
+    image: { src: "/assets/projects/ratemyorg.png", width: 1920, height: 982, frame: "window" },
+    featured: true,
+  },
   {
     id: "multipost",
     name: "MultiPost",
@@ -113,12 +124,22 @@ export const projects: Project[] = [
   },
 ];
 
-// TODO(sanjay): confirm MPAC title + start date, and Nventure / Codeium end dates
+// TODO(sanjay): confirm PVX Plus title, MPAC title + start date, and Nventure / Codeium end dates
 // (LinkedIn blocks automated reads, so these are inferred from the resume + search results).
 export const experience: Role[] = [
   {
+    id: "pvx-plus",
+    dates: "2026 — Present",
+    title: "Software Developer",
+    company: "PVX Plus Technologies",
+    navLabel: "PVX Plus",
+    companyUrl: "https://home.pvxplus.com",
+    logo: { src: "/assets/logos/pvx-plus.png", width: 152, height: 152 },
+    summary: "Modernizing the PxPlus language and building AI agents for PxPlus developers.",
+  },
+  {
     id: "mpac",
-    dates: "2024 — Present",
+    dates: "2024 — 2026",
     title: "Software Developer",
     company: "MPAC",
     companyUrl: "https://www.mpac.ca",

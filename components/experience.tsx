@@ -21,14 +21,15 @@ function CompanyLink({ role, className }: { role: Role; className: string }) {
   );
 }
 
-// Same 203 / 165 / 352 column split as the hero (DESIGN.md §4) so dates and
-// role titles sit on the same verticals as the hero's left/right columns.
+// Role details on the left (475px, ending on the x = 491 grid line), dates flush
+// right in the 507 → 736 column (DESIGN.md §4). Dates come first in the DOM so
+// they read (and stack on mobile) as a label above the role.
 function Row({ id, dates, isLast, children }: { id: string; dates: string; isLast: boolean; children: ReactNode }) {
   return (
     <li id={id} data-testid="experience-row" className="scroll-mt-24">
-      <div className="flex flex-col gap-2 py-8 md:flex-row md:gap-[165px] md:px-4 md:py-10">
-        <p className="type-label shrink-0 text-ink-3 md:w-[203px]">{dates}</p>
-        <div className="md:w-[352px]">{children}</div>
+      <div className="flex flex-col gap-2 py-8 md:flex-row-reverse md:gap-4 md:px-4 md:py-10">
+        <p className="type-label text-ink-3 md:flex-1 md:text-right">{dates}</p>
+        <div className="shrink-0 md:w-[475px]">{children}</div>
       </div>
       {isLast ? null : <Separator />}
     </li>

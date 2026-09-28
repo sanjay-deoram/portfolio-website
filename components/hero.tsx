@@ -23,7 +23,7 @@ export function Hero() {
             <Avatar />
             <div className="flex flex-col gap-1.5 md:gap-1">
               <h1 data-testid="hero-name" className="type-heading-lg text-ink">
-                {site.name}
+                <span className="motion-safe:shine">{site.name}</span>
               </h1>
               <p
                 data-testid="hero-role"

@@ -9,7 +9,7 @@ import { BranchedMenu, type BranchedMenuSection } from "@/components/nav/branche
 const sections: BranchedMenuSection[] = [
   {
     label: sideNav.experienceLabel,
-    children: experience.map((r) => ({ value: `experience-${r.id}`, label: r.company, href: `#experience-${r.id}` })),
+    children: experience.map((r) => ({ value: `experience-${r.id}`, label: r.navLabel ?? r.company, href: `#experience-${r.id}` })),
   },
   {
     label: sideNav.projectsLabel,

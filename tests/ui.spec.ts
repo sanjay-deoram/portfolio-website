@@ -9,7 +9,7 @@ test.describe("layout", () => {
   test("sections exist and are visible", async ({ page }) => {
     await goto(page);
 
-    for (const selector of ["section#about", "section#work", "section#experience", "footer"]) {
+    for (const selector of ["section#about", "section#work", "section#experience", "section#education", "footer"]) {
       const el = page.locator(selector);
       await expect(el).toHaveCount(1);
       await el.scrollIntoViewIfNeeded();
@@ -25,24 +25,22 @@ test.describe("layout", () => {
     expect(overflowing).toBe(true);
   });
 
-  test("avatar: always shown on mobile, revealed on hover on desktop", async ({ page }, testInfo) => {
+  test("avatar: hidden on mobile, revealed on hover on desktop", async ({ page }, testInfo) => {
     await goto(page);
     const avatar = page.getByTestId("hero-avatar");
-    const opacity = () => avatar.evaluate((el) => getComputedStyle(el).opacity);
 
-    const img = avatar.locator("img:visible");
-    await expect(img).toHaveCount(1);
-    await expect
-      .poll(() => img.evaluate((el) => (el as HTMLImageElement).naturalWidth))
-      .toBeGreaterThan(0);
-
-    if (testInfo.project.name === "desktop") {
-      expect(await opacity()).toBe("0");
-      await page.getByTestId("hero-name").hover();
-      await expect.poll(opacity).toBe("1");
-    } else {
-      expect(await opacity()).toBe("1");
+    if (testInfo.project.name !== "desktop") {
+      await expect(avatar).toBeHidden();
+      return;
     }
+
+    const opacity = () => avatar.evaluate((el) => getComputedStyle(el).opacity);
+    await expect
+      .poll(() => avatar.locator("img").evaluate((el) => (el as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0);
+    expect(await opacity()).toBe("0");
+    await page.getByTestId("hero-name").hover();
+    await expect.poll(opacity).toBe("1");
   });
 });
 

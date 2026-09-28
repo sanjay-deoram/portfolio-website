@@ -7,6 +7,8 @@ export default defineConfig({
   testDir: "tests",
   fullyParallel: true,
   retries: 0,
+  // Warms the image optimizer cache so parallel workers don't stall on cold images.
+  globalSetup: "./tests/global-setup.ts",
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL,

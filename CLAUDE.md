@@ -37,18 +37,20 @@ and eyeball the screenshots.
 ```
 app/
   layout.tsx        root layout, metadata, font variables on <html>
-  page.tsx          section order: BackdropGrid, TopFade, Hero, Work, Experience, Footer
+  page.tsx          section order: BackdropGrid, SideNav, TopFade, Hero, Experience, Work, Education, Footer
   fonts.ts          next/font/google loaders (Stack Sans Headline, Figtree, JetBrains Mono)
-  globals.css       @theme tokens + type-* utilities + base layer (source of truth for CSS)
+  globals.css       @theme tokens + type-* utilities + base layer + branched-menu styles
   icon.svg          favicon
 components/
-  hero.tsx, work.tsx, experience.tsx, footer.tsx   the four page sections
+  hero.tsx, work.tsx, experience.tsx, footer.tsx   the page sections (experience.tsx exports Experience and Education)
+  side-nav.tsx, nav/branched-menu.tsx               scroll-spy side menu (≥1280px), port of React Bits' Branched Menu
   backdrop-grid.tsx, top-fade.tsx                   fixed decorative layers
   ui/pill.tsx, ui/separator.tsx, ui/icons.tsx        shared primitives
 content/
-  site.ts           ALL copy + data (projects, experience, education, nav, socials)
+  site.ts           ALL copy + data (projects, experience, education, nav, sideNav, socials).
+                    `id` fields become anchors: #project-<id>, #experience-<id>, #education-<id>
 lib/cn.ts           className joiner
-tests/ui.spec.ts    Playwright smoke tests, driven by content/site.ts
+tests/*.spec.ts     Playwright smoke tests (ui, side-nav), driven by content/site.ts
 DESIGN.md           the design system spec — authoritative
 ```
 

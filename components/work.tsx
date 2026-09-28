@@ -19,18 +19,19 @@ export function Work() {
   const other = projects.filter((project) => !project.featured);
 
   return (
-    <section id="work" className="mt-[88px] flex flex-col gap-12 md:mt-[204px] md:gap-24">
-      {featured.map((project, index) => (
+    <section id="work" className="mt-[120px] flex scroll-mt-24 flex-col gap-12 md:mt-[204px] md:gap-24">
+      {featured.map((project) => (
         <a
-          key={project.href}
+          key={project.id}
+          id={`project-${project.id}`}
           href={project.href}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={accessibleName(project.name, project.title)}
           data-testid="project-card"
-          className="group flex w-full flex-col gap-6 rounded-tray focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:gap-8 md:rounded-tray-lg"
+          className="group flex w-full scroll-mt-24 flex-col gap-6 rounded-tray focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink md:gap-8 md:rounded-tray-lg"
         >
-          <MediaCard project={project} variant="featured" priority={index === 0} />
+          <MediaCard project={project} variant="featured" />
           <div className="flex items-start justify-between gap-4 px-0 md:flex-col md:gap-3 md:px-4">
             <div className="flex min-w-0 flex-1 flex-col gap-2 md:gap-3">
               <p className="type-label text-ink-3">{project.name}</p>
@@ -57,13 +58,14 @@ export function Work() {
           <div className="flex flex-col gap-12 md:flex-row md:gap-4">
             {other.map((project) => (
               <a
-                key={project.href}
+                key={project.id}
+                id={`project-${project.id}`}
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={accessibleName(project.name, project.title)}
                 data-testid="project-card"
-                className="group flex min-w-0 flex-1 flex-col gap-6 rounded-tray focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                className="group flex min-w-0 flex-1 scroll-mt-24 flex-col gap-6 rounded-tray focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
               >
                 <MediaCard project={project} variant="other" />
                 <div className="flex items-start justify-between gap-4 px-0 md:px-4">

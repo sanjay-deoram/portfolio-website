@@ -111,11 +111,12 @@ Vertical rhythm (px):
 
 | Gap                               | Mobile | ≥ md |
 | --------------------------------- | ------ | ---- |
-| Page top → hero name              | 312    | 200  |
-| Hero → #work                      | 88     | 204  |
+| Page top → hero name              | 216    | 200  |
+| Hero → #experience                | 88     | 204  |
 | Between featured projects         | 48     | 96   |
 | Media card → its meta row         | 24     | 32   |
-| #work → #experience               | 120    | 204  |
+| #experience → #work               | 120    | 204  |
+| #work → #education                | 120    | 204  |
 | Last section → footer separator   | 200    | 200  |
 | Footer bottom padding             | 154    | 48   |
 
@@ -124,12 +125,11 @@ Vertical rhythm (px):
 ### Hero (`#about`)
 - **Left column** (`flex-col gap-3 md:gap-[106px]`)
   - Name + role are wrapped in `group relative w-fit` so hovering either reveals the avatar.
-  - **Avatar** (`data-testid="hero-avatar"`, `aria-hidden`): grayscale photo in an oval —
-    `rounded-oval border-3 border-surface shadow-card`, `w-[77px] h-24` (portrait crop) on
-    mobile, `md:w-[107px] md:h-[88px]` (landscape crop) on desktop. Absolutely positioned
-    `bottom-full left-0 mb-3 md:mb-1.5`, `origin-bottom-left`. Mobile: always visible (no
-    hover). Desktop: hidden until the name/role block is hovered. Crops are pre-baked
-    grayscale webp files at 3× (`public/assets/avatar-{desktop,mobile}.webp`).
+  - **Avatar** (`data-testid="hero-avatar"`, `aria-hidden`), **desktop only — never on
+    mobile**: grayscale photo in an oval — `rounded-oval border-3 border-surface shadow-card`,
+    `w-[107px] h-[88px]`. Absolutely positioned `bottom-full left-0 mb-1.5`,
+    `origin-bottom-left`, hidden until the name/role block is hovered. Pre-baked grayscale
+    webp at 3× (`public/assets/avatar-desktop.webp`).
   - Name — `h1.type-heading-lg.text-ink` `data-testid="hero-name"`
   - Role — `p.type-label.text-ink-3` `min-h-[20px] md:min-h-[18px] whitespace-nowrap`,
     typed out character by character with a blinking `|` caret. `data-testid="hero-role"`
@@ -202,6 +202,49 @@ beside the arrow. Separator after the row.
 - last line: `type-label text-ink-3 text-[12px] leading-[14px] md:text-[14px] md:leading-[18px]`
   "Built with Next.js & Claude"
 
+### Side nav (Branched Menu) — desktop ≥ 1280px only
+A port of React Bits' *Branched Menu*: a vertical rail, a trunk per section, curved
+branches to each child, and an ink line that draws along the branch to the active child.
+It is a scroll-spy table of contents.
+
+- **Placement:** `fixed top-1/2 -translate-y-1/2 z-30 hidden xl:block`, fixed width
+  `w-[176px]`, `left-[calc(50%-608px)]` — its right edge sits 56px left of the 752px frame
+  at every viewport width (at 1280px it starts 32px from the screen edge). Fixed width so
+  folding a section never shifts the trunk.
+- **Sections** (page order, all open by default): **Experience** (MPAC, Nventure, Codeium,
+  Rubicon) · **Projects** (MultiPost, AskDocAI, Geass, GoatApp) · **Education**
+  ([Ontario Tech emblem 16px] Ontario Tech).
+  Labels come from `content/site.ts` (`projects[].name`, `experience[].company`,
+  `sideNav.*`). Children link to `#project-<id>`, `#experience-<id>`, `#education-<id>`.
+- **Look (tokens only):** rail/trunk/branches `stroke`; idle labels `ink-3`; active child
+  label, its drawn line and the rail marker `ink`. Section heads `type-label`; children
+  `type-body-sm`. Row 32px, indent 40, trunk 14, branch radius 10, line 1.5px.
+- **Behavior:** scroll-spy picks the last anchor whose top is above 35% of the viewport
+  (nothing is active over the hero; at the page bottom the last item wins). Clicking a child/leaf smooth-scrolls to it (instant
+  under reduced motion), updates the hash with `replaceState`, and sets it active
+  immediately — scroll-spy is paused until the scroll ends so the line doesn't flicker
+  through the items in between. Heads fold/unfold their section.
+- **Motion:** accent line draws 400ms `ease-out-strong`; fold 300ms `ease-out-strong`;
+  marker glides 220ms. Entrance: fades in + `translateX(-8px)→0`, 500ms `ease-out-strong`,
+  600ms delay (after the hero). Reduced motion: no draw, fold or entrance.
+- **Semantics:** `<nav aria-label="Sections">`; children and leaf are `<a href>`; heads are
+  `<button aria-expanded>`; active item has `aria-current="location"`.
+- Every scroll target has `scroll-mt-24` so it doesn't land under the top fade.
+
+### Logo tile
+`size-10 shrink-0 rounded-window bg-paper border-[0.5px] border-stroke shadow-card`,
+emblem centered: square logos at 24px, wide wordmarks (MPAC) scaled to fit 28 × 24.
+Experience rows always show one (right column is `flex items-start gap-4`: tile, then
+title/company/summary); a role with no `logo` gets its company initial in `type-label
+ink-3` so the text column stays aligned. Logos live in `public/assets/logos/`.
+
+### Education row
+Same anatomy as experience rows: a **logo tile** followed by the text. The heading reads
+**"B.Sc. Computer Science · Ontario Tech University"** — `h3.type-heading-sm` with the
+degree in `ink` and "· Ontario Tech University" in `ink-3` (linked), `text-balance`.
+Education is its own `<section id="education">` (headed "Education"), rendered
+after `#work`. Page order: Hero → Experience → Projects → Education → Footer.
+
 ### Icons
 Inline SVG only (no icon library). Stroke/fill `currentColor`, `aria-hidden`.
 Arrow-up-right is 24×24.
@@ -265,3 +308,6 @@ Don't rename without updating the tests.
 | `project-card` | = `projects.length` |
 | `experience-row` | = `experience.length + education.length` |
 | `footer-link` | 4 |
+| `section#education` | 1 |
+| `side-nav` | visible on desktop ≥ 1280px, hidden on mobile |
+| `side-nav-item` | = projects + experience + education |

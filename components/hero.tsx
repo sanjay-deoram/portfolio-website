@@ -12,10 +12,10 @@ const linkClasses =
 /** `#about` — DESIGN.md §5. Server component; the interactive bits (typing
  * role, nav pill entrance, statement reveal) are isolated in `hero/`. */
 export function Hero() {
-  const [projectsLink, experienceLink] = nav;
+  const [experienceLink, projectsLink] = nav;
 
   return (
-    <section id="about" className="relative pt-[312px] md:pt-[200px]">
+    <section id="about" className="relative pt-[216px] md:pt-[200px]">
       <div className="flex flex-col gap-12 md:flex-row md:items-center md:gap-[165px] md:px-4">
         {/* Left column */}
         <div className="flex w-[172px] flex-col gap-3 motion-safe:animate-fade-up md:w-[203px] md:gap-[106px]">
@@ -81,11 +81,11 @@ export function Hero() {
           </p>
 
           <div data-testid="mobile-cta" className="flex gap-3 md:hidden">
-            <Pill variant="primary" href={projectsLink.href}>
-              {projectsLink.label}
-            </Pill>
-            <Pill variant="secondary" href={experienceLink.href}>
+            <Pill variant="primary" href={experienceLink.href}>
               {experienceLink.label}
+            </Pill>
+            <Pill variant="secondary" href={projectsLink.href}>
+              {projectsLink.label}
             </Pill>
           </div>
         </div>
@@ -94,34 +94,20 @@ export function Hero() {
   );
 }
 
-/** Photo above the name. Desktop: hidden until the name/role block is hovered,
- * then rises, grows and fades in from its bottom-left corner (DESIGN.md §6).
- * Mobile has no hover, so it's always shown. Decorative — the name is the label. */
+/** Photo above the name, desktop only: hidden until the name/role block is
+ * hovered, then rises, grows and fades in from its bottom-left corner
+ * (DESIGN.md §6). Not rendered on mobile. Decorative — the name is the label. */
 function Avatar() {
-  const { desktop, mobile } = site.avatar;
+  const { desktop } = site.avatar;
 
   return (
     <div
       aria-hidden="true"
       data-testid="hero-avatar"
-      className="pointer-events-none absolute bottom-full left-0 z-20 mb-3 origin-bottom-left transition-[opacity,translate,scale] duration-800 ease-standard motion-reduce:transition-none md:mb-1.5 md:translate-y-2 md:scale-[0.94] md:opacity-0 md:group-hover:translate-y-0 md:group-hover:scale-100 md:group-hover:opacity-100"
+      className="pointer-events-none absolute bottom-full left-0 z-20 mb-1.5 hidden origin-bottom-left translate-y-2 scale-[0.94] opacity-0 transition-[opacity,translate,scale] duration-800 ease-standard group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none md:block"
     >
-      <div className="relative h-24 w-[77px] overflow-hidden rounded-oval border-3 border-surface shadow-card md:h-[88px] md:w-[107px]">
-        <Image
-          src={desktop.src}
-          alt=""
-          fill
-          sizes="107px"
-          className="hidden object-cover md:block"
-        />
-        <Image
-          src={mobile.src}
-          alt=""
-          fill
-          priority
-          sizes="77px"
-          className="object-cover md:hidden"
-        />
+      <div className="relative h-[88px] w-[107px] overflow-hidden rounded-oval border-3 border-surface shadow-card">
+        <Image src={desktop.src} alt="" fill sizes="107px" className="object-cover" />
       </div>
     </div>
   );

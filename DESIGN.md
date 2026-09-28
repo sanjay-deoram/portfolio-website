@@ -78,6 +78,7 @@ running text.
 | `rounded-sheet`     | 30px (md: `rounded-sheet-lg` 42px)    | Inner media sheet       |
 | `rounded-window`    | 12px                         | Screenshot "window" inside sheet |
 | `rounded-phone`     | 20px                         | Portrait phone capture inside sheet |
+| `rounded-oval`      | 50%                          | Avatar (an ellipse, not a pill)  |
 | `shadow-card`       | `0 1px 12px 0 #00000012`     | Inner media sheet + screenshot window |
 
 Spacing uses Tailwind's default 4px scale. No other shadows, no gradients except the
@@ -110,7 +111,7 @@ Vertical rhythm (px):
 
 | Gap                               | Mobile | ≥ md |
 | --------------------------------- | ------ | ---- |
-| Page top → hero name              | 216    | 200  |
+| Page top → hero name              | 312    | 200  |
 | Hero → #work                      | 88     | 204  |
 | Between featured projects         | 48     | 96   |
 | Media card → its meta row         | 24     | 32   |
@@ -122,6 +123,13 @@ Vertical rhythm (px):
 
 ### Hero (`#about`)
 - **Left column** (`flex-col gap-3 md:gap-[106px]`)
+  - Name + role are wrapped in `group relative w-fit` so hovering either reveals the avatar.
+  - **Avatar** (`data-testid="hero-avatar"`, `aria-hidden`): grayscale photo in an oval —
+    `rounded-oval border-3 border-surface shadow-card`, `w-[77px] h-24` (portrait crop) on
+    mobile, `md:w-[107px] md:h-[88px]` (landscape crop) on desktop. Absolutely positioned
+    `bottom-full left-0 mb-3 md:mb-1.5`, `origin-bottom-left`. Mobile: always visible (no
+    hover). Desktop: hidden until the name/role block is hovered. Crops are pre-baked
+    grayscale webp files at 3× (`public/assets/avatar-{desktop,mobile}.webp`).
   - Name — `h1.type-heading-lg.text-ink` `data-testid="hero-name"`
   - Role — `p.type-label.text-ink-3` `min-h-[20px] md:min-h-[18px] whitespace-nowrap`,
     typed out character by character with a blinking `|` caret. `data-testid="hero-role"`
@@ -212,6 +220,7 @@ everything off under `prefers-reduced-motion`.
 
 | Moment | What | Timing |
 | --- | --- | --- |
+| Hover (name) | Avatar: `opacity 0→1`, `translateY 8px→0`, `scale 0.94→1` from bottom-left (desktop only) | 800ms `ease-standard` — matches the reference; decorative, so slow is fine |
 | Load (once) | Hero left/right blocks fade up: `opacity 0→1`, `translateY 8px→0` | 500ms `ease-out-strong`, 80ms stagger |
 | Load (once) | Role types out, then caret blinks (`step-end`, 1s) | 400ms delay, 45ms/char |
 | Load (once) | Nav pills slide out from behind the first pill (pill *i* starts translated left by the summed width+gap of pills before it; z-index decreases left→right) | 550ms `ease-out-strong`, 250ms delay |
@@ -249,7 +258,7 @@ Don't rename without updating the tests.
 | Selector | Count |
 | --- | --- |
 | `section#about`, `section#work`, `section#experience`, `footer` | 1 each |
-| `hero-name`, `hero-role` | 1 |
+| `hero-name`, `hero-role`, `hero-avatar` | 1 |
 | `hero-statement` | 1 visible per viewport |
 | `nav-pill` | 3 visible on desktop, hidden on mobile |
 | `mobile-cta` | visible on mobile only |

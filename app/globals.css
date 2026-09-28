@@ -27,6 +27,7 @@
   --radius-sheet-lg: 42px;
   --radius-window: 12px;
   --radius-phone: 20px;
+  --radius-oval: 50%;
 
   /* Depth */
   --shadow-card: 0px 1px 12px 0px #00000012;

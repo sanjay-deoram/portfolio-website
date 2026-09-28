@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import Image from "next/image";
 import { nav, site } from "@/content/site";
 import { Pill } from "@/components/ui/pill";
 import { Typewriter } from "@/components/hero/typewriter";
@@ -14,20 +15,23 @@ export function Hero() {
   const [projectsLink, experienceLink] = nav;
 
   return (
-    <section id="about" className="relative pt-[216px] md:pt-[200px]">
+    <section id="about" className="relative pt-[312px] md:pt-[200px]">
       <div className="flex flex-col gap-12 md:flex-row md:items-center md:gap-[165px] md:px-4">
         {/* Left column */}
         <div className="flex w-[172px] flex-col gap-3 motion-safe:animate-fade-up md:w-[203px] md:gap-[106px]">
-          <div className="flex flex-col gap-1.5 md:gap-1">
-            <h1 data-testid="hero-name" className="type-heading-lg text-ink">
-              {site.name}
-            </h1>
-            <p
-              data-testid="hero-role"
-              className="type-label min-h-[20px] whitespace-nowrap text-ink-3 md:min-h-[18px]"
-            >
-              <Typewriter text={site.role} />
-            </p>
+          <div className="group relative w-fit">
+            <Avatar />
+            <div className="flex flex-col gap-1.5 md:gap-1">
+              <h1 data-testid="hero-name" className="type-heading-lg text-ink">
+                {site.name}
+              </h1>
+              <p
+                data-testid="hero-role"
+                className="type-label min-h-[20px] whitespace-nowrap text-ink-3 md:min-h-[18px]"
+              >
+                <Typewriter text={site.role} />
+              </p>
+            </div>
           </div>
           <div className="hidden md:block">
             <p className="flex items-center gap-2 whitespace-nowrap text-ink-3">
@@ -87,5 +91,38 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Photo above the name. Desktop: hidden until the name/role block is hovered,
+ * then rises, grows and fades in from its bottom-left corner (DESIGN.md §6).
+ * Mobile has no hover, so it's always shown. Decorative — the name is the label. */
+function Avatar() {
+  const { desktop, mobile } = site.avatar;
+
+  return (
+    <div
+      aria-hidden="true"
+      data-testid="hero-avatar"
+      className="pointer-events-none absolute bottom-full left-0 z-20 mb-3 origin-bottom-left transition-[opacity,translate,scale] duration-800 ease-standard motion-reduce:transition-none md:mb-1.5 md:translate-y-2 md:scale-[0.94] md:opacity-0 md:group-hover:translate-y-0 md:group-hover:scale-100 md:group-hover:opacity-100"
+    >
+      <div className="relative h-24 w-[77px] overflow-hidden rounded-oval border-3 border-surface shadow-card md:h-[88px] md:w-[107px]">
+        <Image
+          src={desktop.src}
+          alt=""
+          fill
+          sizes="107px"
+          className="hidden object-cover md:block"
+        />
+        <Image
+          src={mobile.src}
+          alt=""
+          fill
+          priority
+          sizes="77px"
+          className="object-cover md:hidden"
+        />
+      </div>
+    </div>
   );
 }

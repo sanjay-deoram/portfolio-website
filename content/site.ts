@@ -30,6 +30,11 @@ export const site = {
   // TODO(sanjay): confirm the email you want public — this one is from the old resume.
   email: "sanjay.deoram@ontariotechu.net",
   resume: "/Resume.pdf",
+  // Revealed on hover over the name (desktop); always shown above it (mobile).
+  avatar: {
+    desktop: { src: "/assets/avatar-desktop.webp", width: 321, height: 264 },
+    mobile: { src: "/assets/avatar-mobile.webp", width: 231, height: 288 },
+  },
 
   // Desktop statement: one entry per line (≤ ~30 chars each to fit 352px).
   statementLines: [

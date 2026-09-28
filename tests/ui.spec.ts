@@ -1,8 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { site, projects, experience, education } from "@/content/site";
 
-const FORBIDDEN_IMAGE_PATTERNS = [/bdog/i, /about/i, /avatar/i];
-
 async function goto(page: Page) {
   await page.goto("/");
 }
@@ -27,15 +25,23 @@ test.describe("layout", () => {
     expect(overflowing).toBe(true);
   });
 
-  test("no owner photo anywhere on the page", async ({ page }) => {
+  test("avatar: always shown on mobile, revealed on hover on desktop", async ({ page }, testInfo) => {
     await goto(page);
-    const srcs = await page.locator("img").evaluateAll((imgs) =>
-      imgs.map((img) => (img as HTMLImageElement).currentSrc || (img as HTMLImageElement).src),
-    );
-    for (const src of srcs) {
-      for (const pattern of FORBIDDEN_IMAGE_PATTERNS) {
-        expect(src, `image src "${src}" matched forbidden pattern ${pattern}`).not.toMatch(pattern);
-      }
+    const avatar = page.getByTestId("hero-avatar");
+    const opacity = () => avatar.evaluate((el) => getComputedStyle(el).opacity);
+
+    const img = avatar.locator("img:visible");
+    await expect(img).toHaveCount(1);
+    await expect
+      .poll(() => img.evaluate((el) => (el as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0);
+
+    if (testInfo.project.name === "desktop") {
+      expect(await opacity()).toBe("0");
+      await page.getByTestId("hero-name").hover();
+      await expect.poll(opacity).toBe("1");
+    } else {
+      expect(await opacity()).toBe("1");
     }
   });
 });

@@ -116,10 +116,13 @@ neck, which fills the throat so the neck runs straight into the jaw — the elbo
 trailing under the front arm and the tail fin behind. Nothing is drawn in. Each file records the command that made it. Glyph sizes are `type-ascii-*`
 utilities (JetBrains Mono, line-height 1, `white-space: pre`); a glyph is 0.6em wide.
 
-- **Corner dragon** (static): `fixed right-0 bottom-0 origin-bottom-right translate-x-[12%]
-  translate-y-[26%] rotate-6` — the full dragon peeking in from the bottom-right, partly
-  off-screen and tilted. `type-ascii-lg` (7px, md 10px → 269 × 497 / 384 × 710),
-  `opacity-30`.
+- **Corner dragon** (static): `fixed right-6 bottom-6 origin-bottom-right -rotate-3` — the full dragon in the
+  bottom-right corner, entirely on-screen and slightly tilted. `type-ascii-lg` (7px, md 10px → 269 × 497 / 384 × 710),
+  `opacity-30`. `mix-blend-multiply`. Hover (hover-capable pointers only): the ASCII fades out
+  (500ms `ease-out-strong`) and a React Bits DitherVeil (`components/dither-veil.tsx`, mounted
+  hidden 1.5s after load, no intro animation) fades in over it — the colour Chinese dragon (`public/assets/dragon-color.png`,
+  from `scripts/dragon-color.mjs`) as Floyd–Steinberg dots in `ink-3` on `paper`, with a
+  150px full-colour window following the cursor that knits back into dots over 1.4s.
 - **Embers**: 18 ASCII sparks (`. ' * + ,`) in a `fixed inset-0 overflow-hidden` layer,
   two thirds spread over x 55–98% (near the corner dragon), the rest 2–42%; positions
   and timings come from a seeded PRNG so server and client agree. `type-ascii-md`, scaled

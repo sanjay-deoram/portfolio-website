@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { asciiDragon } from "@/components/ascii-dragon-art";
+import { CornerDragon } from "@/components/dragon-corner";
 import { DragonFlyby } from "@/components/dragon-flyby";
 import { DragonPeek } from "@/components/dragon-peek";
 
@@ -18,19 +18,6 @@ export function AsciiDragon() {
       <DragonFlyby />
       <DragonPeek />
     </>
-  );
-}
-
-/** Rests in the bottom-right corner, partly off-screen and tilted, as if
- * peeking in. Static. */
-function CornerDragon() {
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none fixed right-0 bottom-0 z-0 origin-bottom-right translate-x-[12%] translate-y-[26%] rotate-6 select-none"
-    >
-      <pre className="type-ascii-lg text-ink-3 opacity-30">{asciiDragon}</pre>
-    </div>
   );
 }
 

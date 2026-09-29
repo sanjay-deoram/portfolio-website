@@ -48,6 +48,7 @@ components/
   ascii-dragon.tsx                                  ASCII dragon layer: static corner dragon + embers (CSS only), plus:
   dragon-flyby.tsx                                  the dragon flying across, coils rippling (client; Web Animations per glyph column)
   dragon-peek.tsx                                   dragon head rising behind project cards on hover (client)
+  dragon-corner.tsx, dither-veil.tsx                corner dragon; hover dithers it into a colour Chinese dragon (React Bits DitherVeil, ogl; image from scripts/dragon-color.mjs → public/assets/dragon-color.png)
   ascii-dragon-*art.ts                              generated art (corner, head, flying) — don't edit; each records its command
   ui/pill.tsx, ui/separator.tsx, ui/icons.tsx        shared primitives
 content/

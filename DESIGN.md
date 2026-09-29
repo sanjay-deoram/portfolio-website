@@ -150,18 +150,18 @@ Vertical rhythm (px):
 | Gap                               | Mobile | ≥ md |
 | --------------------------------- | ------ | ---- |
 | Page top → hero name              | 216    | 200  |
-| Hero → #experience                | 88     | 204  |
+| Hero → #education                 | 40     | 48   |
 | Between featured projects         | 48     | 96   |
 | Media card → its meta row         | 24     | 32   |
-| #experience → #work               | 120    | 204  |
-| #work → #education                | 120    | 204  |
+| #education → #experience          | 40     | 48   |
+| #experience → #work               | 64     | 72   |
 | Last section → footer separator   | 200    | 200  |
 | Footer bottom padding             | 154    | 48   |
 
 ## 5. Components
 
 ### Hero (`#about`)
-- **Left column** (`flex-col gap-3 md:gap-[106px]`)
+- **Left column** (`flex-col gap-3`)
   - Name + role are wrapped in `group relative w-fit` so hovering either reveals the avatar.
   - **Avatar** (`data-testid="hero-avatar"`, `aria-hidden`), **desktop only — never on
     mobile**: grayscale photo in an oval — `rounded-oval border-3 border-surface shadow-card`,
@@ -171,17 +171,12 @@ Vertical rhythm (px):
   - Name — `h1.type-heading-lg.text-ink` `data-testid="hero-name"`
   - Role — `p.type-label.text-ink-3` `min-h-[20px] md:min-h-[18px] whitespace-nowrap`,
     typed out character by character with a blinking `|` caret. `data-testid="hero-role"`
-  - (md only) "based in" `type-label-light` + city `type-label` in `ink-3`
-- **Right column** (`md:w-[352px] flex-col gap-6 md:gap-3`)
+  - (md only) directly under the role: "based in" `type-label-light` + city `type-label` in `ink-3`
+- **Right column** (`md:w-[352px] flex-col gap-6 md:gap-3`); columns are top-aligned (`md:items-start`)
   - (md only) Nav pills: `type-cta rounded-pill px-4 py-3 bg-glass backdrop-blur-lg text-ink`,
     `gap-2`. Each `data-testid="nav-pill"`.
-  - Statement — desktop `type-heading-lg` with explicit `<br/>` line breaks; mobile
-    `type-heading-sm` single paragraph that opens with "Currently at **PVX Plus**" (company
-    in `ink-3`). Both wrapped in `<TextReveal>`. `data-testid="hero-statement"` on the
-    visible one per breakpoint.
-  - (md only) Sub-label: `type-label text-ink-3` "currently at <a underline underline-offset-2>pvx plus</a>"
   - (mobile only) CTA row `flex gap-3`: primary pill `bg-ink text-canvas`, secondary
-    pill `bg-surface-2 text-ink`. `data-testid="mobile-cta"`.
+    pills (Projects, Resume) `bg-surface-2 text-ink`; wraps if narrow. `data-testid="mobile-cta"`.
 
 ### Media card (projects)
 Outer **tray** `bg-surface p-3 md:p-4 rounded-tray md:rounded-tray-lg` → inner **sheet**
@@ -219,8 +214,8 @@ beside the arrow. Separator after the row.
 
 ### Experience (`#experience`)
 - Heading `p.type-label.text-ink-3 md:px-4` "Experience"
-- Each row (`data-testid="experience-row"`): `flex flex-col gap-2 py-8
-  md:flex-row-reverse md:gap-4 md:px-4 md:py-10`
+- Each row (`data-testid="experience-row"`): `flex flex-col gap-2 py-5
+  md:flex-row-reverse md:gap-4 md:px-4 md:py-6`
   - Dates (first in DOM; right column on desktop, `md:flex-1 md:text-right`,
     label above the role on mobile): `type-label text-ink-3`, e.g. "2023 — 2024"
   - Details (left column on desktop, `md:w-[475px] shrink-0`): logo tile + `flex-col gap-1`:
@@ -248,9 +243,9 @@ It is a scroll-spy table of contents.
   `w-[176px]`, `left-[max(16px,calc(50%-656px))]` — its right edge sits 104px left of the 752px frame
   once the viewport is ≥1312px wide; below that it clamps to 16px from the screen edge. Fixed width so
   folding a section never shifts the trunk.
-- **Sections** (page order, all open by default): **Experience** (PVX Plus, MPAC, Nventure, Windsurf (Codeium),
-  Rubicon) · **Projects** (RateMyOrg, MultiPost, AskDocAI, Geass, GoatApp) · **Education**
-  ([Ontario Tech emblem 16px] Ontario Tech).
+- **Sections** (page order, all open by default): **Education**
+  ([Ontario Tech emblem 16px] Ontario Tech) · **Experience** (PVX Plus, MPAC, Nventure, Windsurf (Codeium),
+  Rubicon) · **Projects** (RateMyOrg, MultiPost, AskDocAI, Geass, GoatApp).
   Labels come from `content/site.ts` (`projects[].name`, `experience[].navLabel ?? company`,
   `sideNav.*`). Children link to `#project-<id>`, `#experience-<id>`, `#education-<id>`.
 - **Look (tokens only):** rail/trunk/branches `stroke`; idle labels `ink-3`; active child
@@ -276,9 +271,8 @@ title/company/summary); a role with no `logo` gets its company initial in `type-
 ink-3` so the text column stays aligned. Logos live in `public/assets/logos/`.
 
 ### Education row
-Same anatomy as experience rows: a **logo tile** followed by the text. The heading reads
-**"B.Sc. Computer Science · Ontario Tech University"** — `h3.type-heading-sm` with the
-degree in `ink` and "· Ontario Tech University" in `ink-3` (linked), `text-balance`.
+Identical to an experience row: **logo tile**, degree as `h3.type-heading-sm` (`ink`), and the
+school beneath it as a linked `type-label text-ink-3` (like a company name).
 Education is its own `<section id="education">` (headed "Education"), rendered
 after `#work`. Page order: Hero → Experience → Projects → Education → Footer.
 
@@ -346,7 +340,6 @@ Don't rename without updating the tests.
 | --- | --- |
 | `section#about`, `section#work`, `section#experience`, `footer` | 1 each |
 | `hero-name`, `hero-role`, `hero-avatar` | 1 |
-| `hero-statement` | 1 visible per viewport |
 | `nav-pill` | 3 visible on desktop, hidden on mobile |
 | `mobile-cta` | visible on mobile only |
 | `project-card` | = `projects.length` |

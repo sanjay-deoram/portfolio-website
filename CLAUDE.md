@@ -37,7 +37,7 @@ and eyeball the screenshots.
 ```
 app/
   layout.tsx        root layout, metadata, font variables on <html>
-  page.tsx          section order: BackdropGrid, SideNav, AsciiDragon, TopFade, Hero, Experience, Work, Education, Footer
+  page.tsx          section order: BackdropGrid, SideNav, AsciiDragon, TopFade, Hero, Education, Experience, Work, Footer
   fonts.ts          next/font/google loaders (Stack Sans Headline, Figtree, JetBrains Mono)
   globals.css       @theme tokens + type-* utilities + base layer + branched-menu styles
   icon.svg          favicon
@@ -76,7 +76,7 @@ DESIGN.md           the design system spec — authoritative
    guards in components). Hover effects only where `hover:` naturally applies (no
    hover state simulated for touch).
 4. **`data-testid` contract** (DESIGN.md §8) — don't rename without updating
-   `tests/ui.spec.ts`: `hero-name`, `hero-role`, `hero-statement`, `nav-pill`,
+   `tests/ui.spec.ts`: `hero-name`, `hero-role`, `nav-pill`,
    `mobile-cta`, `project-card`, `experience-row`, `footer-link`, plus the
    `#about` / `#work` / `#experience` section ids and `<footer>`.
 5. **To verify UI**: `npm run test:ui`, then look at `test-results/screens/*.png`.

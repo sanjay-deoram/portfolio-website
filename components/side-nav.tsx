@@ -8,14 +8,6 @@ import { BranchedMenu, type BranchedMenuSection } from "@/components/nav/branche
 // Page order, so scroll-spy moves the line top to bottom (DESIGN.md §5 "Side nav").
 const sections: BranchedMenuSection[] = [
   {
-    label: sideNav.experienceLabel,
-    children: experience.map((r) => ({ value: `experience-${r.id}`, label: r.navLabel ?? r.company, href: `#experience-${r.id}` })),
-  },
-  {
-    label: sideNav.projectsLabel,
-    children: projects.map((p) => ({ value: `project-${p.id}`, label: p.name, href: `#project-${p.id}` })),
-  },
-  {
     label: sideNav.educationLabel,
     children: education.map((r) => ({
       value: `education-${r.id}`,
@@ -23,6 +15,14 @@ const sections: BranchedMenuSection[] = [
       href: `#education-${r.id}`,
       icon: r.logo ? <Image src={r.logo.src} alt="" width={16} height={16} /> : undefined,
     })),
+  },
+  {
+    label: sideNav.experienceLabel,
+    children: experience.map((r) => ({ value: `experience-${r.id}`, label: r.navLabel ?? r.company, href: `#experience-${r.id}` })),
+  },
+  {
+    label: sideNav.projectsLabel,
+    children: projects.map((p) => ({ value: `project-${p.id}`, label: p.name, href: `#project-${p.id}` })),
   },
 ];
 

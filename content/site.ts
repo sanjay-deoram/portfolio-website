@@ -32,7 +32,6 @@ export const site = {
   name: "Sanjay Deoram",
   role: "software developer",
   location: "toronto",
-  current: { company: "pvx plus", url: "https://home.pvxplus.com" },
   // TODO(sanjay): confirm the email you want public — this one is from the old resume.
   email: "sanjay.deoram@ontariotechu.net",
   resume: "/SanjayDeoramResume.pdf",
@@ -41,18 +40,6 @@ export const site = {
     desktop: { src: "/assets/avatar-desktop.webp", width: 321, height: 264 },
   },
 
-  // Desktop statement: one entry per line (≤ ~30 chars each to fit 352px).
-  statementLines: [
-    "I turn messy workflows into",
-    "software that just works.",
-    "Full-stack, practical & fast.",
-  ],
-  // Mobile statement: `lead` renders in ink-3, `rest` in ink.
-  statementMobile: {
-    lead: "PVX Plus",
-    prefix: "Currently at ",
-    rest: ", I turn messy workflows into software that just works. Full-stack, practical and fast.",
-  },
 
   meta: {
     title: "Sanjay Deoram — Software Developer",

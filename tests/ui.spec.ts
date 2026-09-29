@@ -58,17 +58,6 @@ test.describe("hero", () => {
     await expect(role).toContainText(site.role);
   });
 
-  test("exactly one visible hero-statement per viewport", async ({ page }) => {
-    await goto(page);
-    const statements = page.getByTestId("hero-statement");
-    const count = await statements.count();
-    let visibleCount = 0;
-    for (let i = 0; i < count; i++) {
-      if (await statements.nth(i).isVisible()) visibleCount++;
-    }
-    expect(visibleCount).toBe(1);
-  });
-
   test("nav pills on desktop, mobile CTA on mobile", async ({ page }, testInfo) => {
     await goto(page);
     const navPills = page.getByTestId("nav-pill");

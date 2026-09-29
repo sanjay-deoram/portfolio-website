@@ -17,9 +17,9 @@ export default function Home() {
         <TopFade />
         <main>
           <Hero />
+          <Education />
           <Experience />
           <Work />
-          <Education />
         </main>
         <Footer />
       </div>

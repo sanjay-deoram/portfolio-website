@@ -50,7 +50,7 @@ export const site = {
 
 export const nav: NavLink[] = [
   { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#work" },
+  { label: "Projects", href: "#projects" },
   { label: "Resume", href: "/SanjayDeoramResume.pdf", external: true },
 ];
 

@@ -146,7 +146,7 @@ Vertical rhythm (px):
 | Between featured projects         | 48     | 96   |
 | Media card → its meta row         | 24     | 32   |
 | #education → #experience          | 40     | 48   |
-| #experience → #work               | 64     | 72   |
+| #experience → #projects           | 64     | 72   |
 | Last section → footer separator   | 200    | 200  |
 | Footer bottom padding             | 154    | 48   |
 
@@ -266,7 +266,7 @@ ink-3` so the text column stays aligned. Logos live in `public/assets/logos/`.
 Identical to an experience row: **logo tile**, degree as `h3.type-heading-sm` (`ink`), and the
 school beneath it as a linked `type-label text-ink-3` (like a company name).
 Education is its own `<section id="education">` (headed "Education"), rendered
-after `#work`. Page order: Hero → Experience → Projects → Education → Footer.
+after `#projects`. Page order: Hero → Experience → Projects → Education → Footer.
 
 ### Icons
 Inline SVG only (no icon library). Stroke/fill `currentColor`, `aria-hidden`.
@@ -329,7 +329,7 @@ Don't rename without updating the tests.
 
 | Selector | Count |
 | --- | --- |
-| `section#about`, `section#work`, `section#experience`, `footer` | 1 each |
+| `section#about`, `section#projects`, `section#experience`, `footer` | 1 each |
 | `hero-name`, `hero-role`, `hero-avatar` | 1 |
 | `nav-pill` | 3 visible on desktop, hidden on mobile |
 | `mobile-cta` | visible on mobile only |

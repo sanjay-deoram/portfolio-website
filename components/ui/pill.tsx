@@ -51,6 +51,16 @@ export function Pill(props: PillProps) {
   if (isLinkProps(props)) {
     const { href, external, variant: _v, className: _c, children: _ch, ...anchorProps } = props;
 
+    // In-page anchors are plain links: next/link skips the scroll when the URL
+    // already ends in that hash (second tap on "Projects" did nothing).
+    if (href.startsWith("#")) {
+      return (
+        <a href={href} className={classes} {...anchorProps}>
+          {children}
+        </a>
+      );
+    }
+
     if (external) {
       return (
         <a href={href} className={classes} target="_blank" rel="noopener noreferrer" {...anchorProps}>

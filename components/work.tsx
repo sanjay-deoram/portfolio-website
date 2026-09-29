@@ -19,7 +19,7 @@ export function Work() {
   const other = projects.filter((project) => !project.featured);
 
   return (
-    <section id="work" className="mt-[64px] flex scroll-mt-24 flex-col gap-12 md:mt-[72px] md:gap-24">
+    <section id="projects" className="mt-[64px] flex scroll-mt-24 flex-col gap-12 md:mt-[72px] md:gap-24">
       {featured.map((project) => (
         <a
           key={project.id}

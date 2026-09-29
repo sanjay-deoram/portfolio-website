@@ -9,7 +9,7 @@ test.describe("layout", () => {
   test("sections exist and are visible", async ({ page }) => {
     await goto(page);
 
-    for (const selector of ["section#about", "section#work", "section#experience", "section#education", "footer"]) {
+    for (const selector of ["section#about", "section#projects", "section#experience", "section#education", "footer"]) {
       const el = page.locator(selector);
       await expect(el).toHaveCount(1);
       await el.scrollIntoViewIfNeeded();

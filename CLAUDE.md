@@ -3,8 +3,7 @@
 ## What this is
 
 Sanjay Deoram's portfolio: a quiet, typographic, single-page site (hero → work →
-experience → footer) sitting on a visible dashed column grid. 1:1 structural
-replication of https://adityamuralidhar.in, carrying Sanjay's content. No dark mode,
+experience → footer) sitting on a visible dashed column grid. No dark mode,
 no CMS, no backend — a static Next.js app.
 
 ## Stack
@@ -77,7 +76,7 @@ DESIGN.md           the design system spec — authoritative
 4. **`data-testid` contract** (DESIGN.md §8) — don't rename without updating
    `tests/ui.spec.ts`: `hero-name`, `hero-role`, `nav-pill`,
    `mobile-cta`, `project-card`, `experience-row`, `footer-link`, plus the
-   `#about` / `#work` / `#experience` section ids and `<footer>`.
+   `#about` / `#projects` / `#experience` section ids and `<footer>`.
 5. **To verify UI**: `npm run test:ui`, then look at `test-results/screens/*.png`.
 
 ## Known deviations from "always latest"

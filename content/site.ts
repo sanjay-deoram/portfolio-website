@@ -35,7 +35,7 @@ export const site = {
   current: { company: "pvx plus", url: "https://home.pvxplus.com" },
   // TODO(sanjay): confirm the email you want public — this one is from the old resume.
   email: "sanjay.deoram@ontariotechu.net",
-  resume: "/Resume.pdf",
+  resume: "/SanjayDeoramResume.pdf",
   // Revealed on hover over the name. Desktop only — never shown on mobile.
   avatar: {
     desktop: { src: "/assets/avatar-desktop.webp", width: 321, height: 264 },
@@ -64,7 +64,7 @@ export const site = {
 export const nav: NavLink[] = [
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#work" },
-  { label: "Resume", href: "/Resume.pdf", external: true },
+  { label: "Resume", href: "/SanjayDeoramResume.pdf", external: true },
 ];
 
 export const socials: NavLink[] = [
@@ -124,7 +124,7 @@ export const projects: Project[] = [
   },
 ];
 
-// TODO(sanjay): confirm PVX Plus title, MPAC title + start date, and Nventure / Codeium end dates
+// TODO(sanjay): confirm PVX Plus title, MPAC title + start date, and Nventure / Windsurf end dates
 // (LinkedIn blocks automated reads, so these are inferred from the resume + search results).
 export const experience: Role[] = [
   {
@@ -158,12 +158,12 @@ export const experience: Role[] = [
       "Automated client file processing with Python on AWS Lambda, S3 and SharePoint, saving 180 manual hours a quarter. Built a Next.js scheduler for Instagram stories and podcasts.",
   },
   {
-    id: "codeium",
+    id: "windsurf",
     dates: "2023 — 2024",
     title: "Content Creator, Contract",
-    company: "Codeium",
-    companyUrl: "https://codeium.com",
-    logo: { src: "/assets/logos/codeium.svg", width: 24, height: 24 },
+    company: "Windsurf (Codeium)",
+    companyUrl: "https://windsurf.com",
+    logo: { src: "/assets/logos/windsurf.svg", width: 24, height: 24 },
     summary:
       "Made 25+ short-form videos a month on new features and tips, reaching 100K+ monthly views.",
   },

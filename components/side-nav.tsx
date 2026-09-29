@@ -90,7 +90,7 @@ export function SideNav() {
   return (
     <div
       data-testid="side-nav"
-      className="fixed top-1/2 left-[calc(50%-608px)] z-30 hidden w-[176px] -translate-y-1/2 motion-safe:animate-nav-in xl:block"
+      className="fixed top-1/2 left-[max(16px,calc(50%-656px))] z-30 hidden w-[176px] -translate-y-1/2 motion-safe:animate-nav-in xl:block"
     >
       <BranchedMenu items={sections} active={active} onSelect={select} ariaLabel="Sections" />
     </div>

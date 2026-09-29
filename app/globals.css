@@ -76,6 +76,34 @@
     }
   }
 
+  /* Embers: rise from below the viewport, drifting sideways, fading in and
+     out. Each ember sets --drift and --s (scale) inline. */
+  @keyframes ember-rise {
+    0% {
+      opacity: 0;
+      transform: translate(0, 0) scale(var(--s, 1));
+    }
+    15% {
+      opacity: 0.6;
+    }
+    70% {
+      opacity: 0.35;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--drift, 0px), -80vh) scale(var(--s, 1));
+    }
+  }
+
+  @keyframes ember-sway {
+    from {
+      transform: translateX(-5px);
+    }
+    to {
+      transform: translateX(5px);
+    }
+  }
+
   @keyframes caret-blink {
     0%,
     50% {
@@ -91,6 +119,64 @@
 /* ---------------------------------------------------------------------- */
 /* Typography utilities — DESIGN.md §2. Mobile-first; md column at >=768px */
 /* ---------------------------------------------------------------------- */
+
+/* ASCII dragon (components/ascii-dragon.tsx, dragon-flyby.tsx, dragon-peek.tsx)
+   — DESIGN.md §4. A mono glyph is 0.6em wide. lg: the corner dragon (64 × 71
+   glyphs). xs: the flyby (157 × 21 straight → 471 × 105, md 659 × 147). sm:
+   the peek head. md: the embers. */
+@utility type-ascii-xs {
+  font-family: var(--font-mono);
+  font-size: 5px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+
+  @media (width >= 48rem) {
+    font-size: 7px;
+  }
+}
+
+@utility type-ascii-lg {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+
+  @media (width >= 48rem) {
+    font-size: 10px;
+  }
+}
+
+@utility type-ascii-sm {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+}
+
+@utility type-ascii-md {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+}
+
+/* Embers: set --x, --dur, --delay (negative, so they're mid-flight on load),
+   --drift and --s inline. Linear: a steady rise, not an entrance. */
+@utility ember {
+  position: absolute;
+  bottom: -2em;
+  left: var(--x);
+  animation: ember-rise var(--dur, 12s) linear var(--delay, 0s) infinite;
+}
+
+@utility ember-sway {
+  display: inline-block;
+  animation: ember-sway 2.8s var(--ease-in-out-strong) infinite alternate;
+}
 
 /* Hero name glare (port of React Bits' Shiny Text, as on the reference): an
    ink-3 highlight sweeps across ink text. Apply with `motion-safe:` so reduced

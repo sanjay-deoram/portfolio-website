@@ -1,4 +1,3 @@
-import { Heart } from "@/components/ui/icons";
 import { Separator } from "@/components/ui/separator";
 import { site, socials } from "@/content/site";
 import { CopyEmail } from "@/components/footer/copy-email";
@@ -41,13 +40,6 @@ export function Footer() {
           <p className="type-label text-[12px] leading-[14px] text-ink-3">All rights reserved</p>
         </div>
       </div>
-
-      <p className="flex items-center gap-1 px-0 text-ink-3 md:px-4">
-        <Heart />
-        <span className="type-label text-[12px] leading-[14px] md:text-[14px] md:leading-[18px]">
-          Built with Next.js &amp; Claude
-        </span>
-      </p>
     </footer>
   );
 }

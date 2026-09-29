@@ -45,18 +45,16 @@ components/
   hero.tsx, work.tsx, experience.tsx, footer.tsx   the page sections (experience.tsx exports Experience and Education)
   side-nav.tsx, nav/branched-menu.tsx               scroll-spy side menu (≥1280px), port of React Bits' Branched Menu
   backdrop-grid.tsx, top-fade.tsx                   fixed decorative layers
-  ascii-dragon.tsx                                  ASCII dragon layer: static corner dragon + embers (CSS only), plus:
-  dragon-flyby.tsx                                  the dragon flying across, coils rippling (client; Web Animations per glyph column)
+  ascii-dragon.tsx                                  ASCII dragon layer: corner dragon + embers (CSS only), plus:
   dragon-peek.tsx                                   dragon head rising behind project cards on hover (client)
-  dragon-corner.tsx, dither-veil.tsx                corner dragon; hover dithers it into a colour Chinese dragon (React Bits DitherVeil, ogl; image from scripts/dragon-color.mjs → public/assets/dragon-color.png)
-  ascii-dragon-*art.ts                              generated art (corner, head, flying) — don't edit; each records its command
+  dragon-corner.tsx, dither-veil.tsx                corner dragon: a dithered colour Chinese dragon, full colour under the cursor on hover (React Bits DitherVeil, ogl; image from scripts/dragon-color.mjs → public/assets/dragon-color.png)
+  ascii-dragon-*art.ts                              generated art (corner, head) — don't edit; each records its command
   ui/pill.tsx, ui/separator.tsx, ui/icons.tsx        shared primitives
 content/
   site.ts           ALL copy + data (projects, experience, education, nav, sideNav, socials).
                     `id` fields become anchors: #project-<id>, #experience-<id>, #education-<id>
 lib/cn.ts           className joiner
 scripts/ascii-art.mjs         image → ASCII art (source: scripts/dragon-source.png; see the art files' headers)
-scripts/ascii-flying.mjs      straightens the dragon (centre line in scripts/dragon-spine.json) → the flyby art
 tests/*.spec.ts     Playwright smoke tests (ui, side-nav), driven by content/site.ts
 DESIGN.md           the design system spec — authoritative
 ```
@@ -105,3 +103,13 @@ DESIGN.md           the design system spec — authoritative
 - If `next start` gets restarted after a rebuild, make sure the old `next-server`
   process is dead — a stale one serves HTML pointing at deleted CSS chunks (page
   renders unstyled).
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

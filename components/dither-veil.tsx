@@ -42,11 +42,14 @@ export type DitherVeilProps = {
   intro?: boolean;
   /** Clicking sends a ring of colour rippling out across the image. */
   clickBurst?: boolean;
+  /** Called once, after the first frame with the image is drawn. Until then
+   * the (opaque) canvas is a flat ink box — keep it hidden. */
+  onReady?: () => void;
   className?: string;
   style?: CSSProperties;
 };
 
-type Settings = Required<Omit<DitherVeilProps, "src" | "className" | "style">>;
+type Settings = Required<Omit<DitherVeilProps, "src" | "onReady" | "className" | "style">>;
 
 const ORDERED: Record<string, number> = { bayer: 0, noise: 1, lines: 2 };
 
@@ -437,14 +440,17 @@ export function DitherVeil({
   wander = false,
   intro: introEffect = true,
   clickBurst = true,
+  onReady,
   className = "",
   style,
 }: DitherVeilProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<Settings | null>(null);
   const wakeRef = useRef<() => void>(() => {});
+  const onReadyRef = useRef(onReady);
 
   useEffect(() => {
+    onReadyRef.current = onReady;
     settingsRef.current = {
       fit,
       pattern,
@@ -562,6 +568,7 @@ export function DitherVeil({
     const samplerContext = sampler.getContext("2d", { willReadFrequently: true });
 
     let image: HTMLImageElement | null = null;
+    let reported = false;
     let introStart = 0;
     let diffusedKey = "";
     let diffusionBlocked = false;
@@ -763,6 +770,10 @@ export function DitherVeil({
       const intro = image ? (s.intro ? Math.min(1, (now - introStart) / INTRO_MS) : 1) : 0;
       viewUniforms.uIntro.value = 1 - Math.pow(1 - intro, 2);
       renderer.render({ scene: viewMesh });
+      if (image && !reported) {
+        reported = true;
+        onReadyRef.current?.();
+      }
 
       const busy =
         pointer.inside || wanderOn || presence > 0.002 || bursts.length > 0 || now < trailUntil || (image && intro < 1);

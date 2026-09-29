@@ -1,21 +1,18 @@
 import type { CSSProperties } from "react";
 import { CornerDragon } from "@/components/dragon-corner";
-import { DragonFlyby } from "@/components/dragon-flyby";
 import { DragonPeek } from "@/components/dragon-peek";
 
 /**
  * The ASCII dragon layer — DESIGN.md §4 "ASCII dragon", §6. Everything is
  * decorative: aria-hidden, pointer-events-none, behind the content (z-0), and
  * still or absent under prefers-reduced-motion. Nothing here moves with the
- * scroll. The art is generated from an illustration by scripts/ascii-art.mjs
- * and scripts/ascii-flying.mjs.
+ * scroll. The art is generated from an illustration by scripts/ascii-art.mjs.
  */
 export function AsciiDragon() {
   return (
     <>
       <CornerDragon />
       <Embers />
-      <DragonFlyby />
       <DragonPeek />
     </>
   );

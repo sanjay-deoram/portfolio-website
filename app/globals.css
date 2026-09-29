@@ -95,6 +95,21 @@
     }
   }
 
+  /* The corner dragon's breath: out of the mouth, up and away, fading. */
+  @keyframes dragon-puff {
+    0% {
+      opacity: 0;
+      transform: translate(0, 0) scale(0.8);
+    }
+    12% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--dx, 0px), var(--dy, -80px)) scale(1.6);
+    }
+  }
+
   @keyframes ember-sway {
     from {
       transform: translateX(-5px);
@@ -120,22 +135,9 @@
 /* Typography utilities — DESIGN.md §2. Mobile-first; md column at >=768px */
 /* ---------------------------------------------------------------------- */
 
-/* ASCII dragon (components/ascii-dragon.tsx, dragon-flyby.tsx, dragon-peek.tsx)
+/* ASCII dragon (components/ascii-dragon.tsx, dragon-corner.tsx, dragon-peek.tsx)
    — DESIGN.md §4. A mono glyph is 0.6em wide. lg: the corner dragon (64 × 71
-   glyphs). xs: the flyby (157 × 21 straight → 471 × 105, md 659 × 147). sm:
-   the peek head. md: the embers. */
-@utility type-ascii-xs {
-  font-family: var(--font-mono);
-  font-size: 5px;
-  line-height: 1;
-  letter-spacing: 0;
-  white-space: pre;
-
-  @media (width >= 48rem) {
-    font-size: 7px;
-  }
-}
-
+   glyphs). sm: the peek head. md: the embers. */
 @utility type-ascii-lg {
   font-family: var(--font-mono);
   font-size: 7px;
@@ -171,6 +173,11 @@
   bottom: -2em;
   left: var(--x);
   animation: ember-rise var(--dur, 12s) linear var(--delay, 0s) infinite;
+}
+
+/* Corner dragon breath (dragon-corner.tsx): set --dx, --dy, --dur, --delay inline. */
+@utility dragon-puff {
+  animation: dragon-puff var(--dur, 3s) var(--ease-out-strong) var(--delay, 0s) both;
 }
 
 @utility ember-sway {

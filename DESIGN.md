@@ -100,41 +100,29 @@ lines, dashed 8px on / 8px off, color `hairline`:
 
 **Top fade**: `fixed inset-x-0 top-0 h-14 z-20 bg-gradient-to-b from-canvas to-transparent pointer-events-none`.
 
-**ASCII dragon** (`components/ascii-dragon.tsx` + `dragon-flyby.tsx` + `dragon-peek.tsx`). A layer of
+**ASCII dragon** (`components/ascii-dragon.tsx` + `dragon-corner.tsx` + `dragon-peek.tsx`). A layer of
 decorative ASCII art behind the content: every piece is `aria-hidden`,
 `pointer-events-none`, `select-none`, `text-ink-3`, and sits at z-0 (under the z-10
 content, so cards and text pass over it). Nothing in it moves with the scroll. The art is
 generated from `scripts/dragon-source.png`: `scripts/ascii-art.mjs` writes
 `components/ascii-dragon-art.ts` (the full dragon, 64 × 71 glyphs) and
-`components/ascii-dragon-head-art.ts` (a crop of its head); `scripts/ascii-flying.mjs`
-straightens the same drawing for `components/ascii-dragon-flying-art.ts` (157 × 21
-glyphs): the body unrolled along the centre line traced in `scripts/dragon-spine.json`
-(its own scales, back ridge and both clawed arms, back always on top — the drawing twists
-as it coils, and each twist is blended over a few px so there's no seam), squeezed to half
-its length and laid level, with the real head on the front — keeping the stub of its own
-neck, which fills the throat so the neck runs straight into the jaw — the elbow flame
-trailing under the front arm and the tail fin behind. Nothing is drawn in. Each file records the command that made it. Glyph sizes are `type-ascii-*`
+`components/ascii-dragon-head-art.ts` (a crop of its head). Each file records the command that made it. Glyph sizes are `type-ascii-*`
 utilities (JetBrains Mono, line-height 1, `white-space: pre`); a glyph is 0.6em wide.
 
-- **Corner dragon** (static): `fixed right-6 bottom-6 origin-bottom-right -rotate-3` — the full dragon in the
-  bottom-right corner, entirely on-screen and slightly tilted. `type-ascii-lg` (7px, md 10px → 269 × 497 / 384 × 710),
-  `opacity-30`. `mix-blend-multiply`. Hover (hover-capable pointers only): the ASCII fades out
-  (500ms `ease-out-strong`) and a React Bits DitherVeil (`components/dither-veil.tsx`, mounted
-  hidden 1.5s after load, no intro animation) fades in over it — the colour Chinese dragon (`public/assets/dragon-color.png`,
-  from `scripts/dragon-color.mjs`) as Floyd–Steinberg dots in `ink-3` on `paper`, with a
-  150px full-colour window following the cursor that knits back into dots over 1.4s.
+- **Corner dragon** (`components/dragon-corner.tsx`): `fixed right-6 bottom-6 origin-bottom-right -rotate-3` — the full dragon in the
+  bottom-right corner, entirely on-screen and slightly tilted, `mix-blend-multiply`. Its frame is the
+  corner ASCII art in `type-ascii-lg` (7px, md 10px → 269 × 497 / 384 × 710), rendered `invisible`;
+  what shows is a React Bits DitherVeil (`components/dither-veil.tsx`, no intro animation) filling
+  it — the colour Chinese dragon (`public/assets/dragon-color.png`, from `scripts/dragon-color.mjs`)
+  as Floyd–Steinberg dots in `ink-3` on `paper`, at `opacity-25`. The veil stays at `opacity-0`
+  until it has drawn its first frame with the image (its opaque canvas is a flat ink box before
+  that), then fades in (500ms `ease-out-strong`). Hover (hover-capable pointers only): the dots
+  go to full opacity (500ms `ease-out-strong`) and a 150px full-colour window follows the cursor,
+  knitting back into dots over 1.4s.
 - **Embers**: 18 ASCII sparks (`. ' * + ,`) in a `fixed inset-0 overflow-hidden` layer,
   two thirds spread over x 55–98% (near the corner dragon), the rest 2–42%; positions
   and timings come from a seeded PRNG so server and client agree. `type-ascii-md`, scaled
   1.1–2.2×.
-- **Flyby**: the straightened dragon flying level across the band above the hero, head
-  first, its body bent into coils (§6). `fixed top-24 left-0 w-max` (clear of the top
-  fade even when the head is at the top of the wave), padded `px-8` so no glyph shows before or after a
-  pass; `type-ascii-xs` (5px, md 7px → 471 × 105 / 659 × 147 straight; the coils add
-  about ±6em), `opacity-55` (denser than the corner's 30% because the glyphs are
-  thinner). The body is split into one-glyph columns — slices across the body, each
-  turning about its point on the centre line — and the head is one rigid block that
-  turns on the joint where it meets the neck.
 - **Peek**: the head crop (36 × 17), appended to each `project-card` link (made
   `relative`) after hydration: `absolute top-0 right-[12%] -z-10`, `type-ascii-sm`. The
   negative z-index paints it under the card's tray, so the tray's top edge hides the neck
@@ -289,7 +277,7 @@ Principles (Emil Kowalski): animate only when it has a purpose; ease-out for thi
 entering; custom curves, never `ease-in`; only `transform`, `opacity`, `clip-path`;
 everything off under `prefers-reduced-motion`. Named exceptions: the hero name glare
 animates `background-position` (paint-only, no layout) because a text-clipped gradient
-can't be moved any other way. Continuous travel (glare, embers, the dragon flyby) is
+can't be moved any other way. Continuous travel (glare, embers) is
 `linear` — constant speed, not an entrance.
 
 | Token                 | Value                              |
@@ -303,7 +291,6 @@ can't be moved any other way. Continuous travel (glare, embers, the dragon flyby
 | Hover (name) | Avatar: `opacity 0→1`, `translateY 8px→0`, `scale 0.94→1` from bottom-left (desktop only) | 800ms `ease-standard` — matches the reference; decorative, so slow is fine |
 | Ambient | Name **glare** (`motion-safe:shine` on a span inside `hero-name`): 140° gradient `ink → ink-3 → ink` clipped to the text, `background-size: 200%`, `background-position 150% → -50%` | 5s `linear`, loops, 4s delay (after the hero intro) — matches the reference |
 | Ambient | **Embers** rise from below the viewport to 80vh up, drifting ±60px, `opacity 0 → 0.6 → 0 `; each glyph also sways `translateX ±5px` | 11–20s `linear`, looping, negative delays; sway 2.8s `ease-in-out-strong` alternate; not shown under reduced motion |
-| Ambient | **Dragon flyby**: head-first, `translateX(-100%)` → `translateX(100vw)`, then off-screen for 12s before the next pass. Meanwhile its coils ripple: a wave runs down the body from head to tail (1.8 wavelengths on the body), swinging the body's heading up to ±48° (55% of that at the neck, easing to full over the first 30% of the body, so the neck curves into the head without a kink). Each column is translated and rotated to where the bent body puts it; the whole is kept centred on the body's average height. The head rides the wave with the body — rising and dipping about ±3.5em (the body: ±6em) and nodding ±26° the way it's going, nose up as it climbs. It flies exactly as fast as the wave travels back along the body (as measured across the screen), so the crests hold still in the air and every part of the body follows the head's path — the crossing takes as long as the screen is wide (~25s at 1440px, ~15s on a phone) | Crossing `linear` at that speed, first pass 1.2s after load; wave 2.8s `linear`, 96 keyframes per wave (29ms apart, so the speed never visibly steps). All Web Animations (`transform` only), computed on mount and sharing one start time; not shown (or computed) under reduced motion |
 | Hover | **Peek**: the dragon head rises `translateY 0 → -66%` from behind the card's tray (hover-capable pointers only, via `group-hover`) | 500ms `ease-out-strong`; instant under reduced motion |
 | Load (once) | Hero left/right blocks fade up: `opacity 0→1`, `translateY 8px→0` | 500ms `ease-out-strong`, 80ms stagger |
 | Load (once) | Role types out, then caret blinks (`step-end`, 1s) | 400ms delay, 45ms/char |

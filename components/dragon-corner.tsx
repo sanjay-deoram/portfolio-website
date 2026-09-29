@@ -1,38 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
 import { asciiDragon } from "@/components/ascii-dragon-art";
 import { cn } from "@/lib/cn";
 
-// ogl and the shaders only load once someone hovers the dragon.
+// ogl and the shaders load on the client, after hydration.
 const DitherVeil = dynamic(() => import("@/components/dither-veil").then((m) => m.DitherVeil), { ssr: false });
 
 const COLOR_SRC = "/assets/dragon-color.png";
 
-const token = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const noop = () => () => {};
+const readPalette = () => {
+  const style = getComputedStyle(document.documentElement);
+  return `${style.getPropertyValue("--color-ink-3").trim()} ${style.getPropertyValue("--color-paper").trim()}`;
+};
 
 /**
- * The corner dragon — DESIGN.md §4 "ASCII dragon". Rests as ASCII in the
- * bottom-right, whole and slightly tilted. Hover it (hover-capable pointers
- * only) and it dithers into a Chinese dragon in colour, revealed under the
- * cursor and knitting back into dots behind it (React Bits' DitherVeil, drawn
- * from public/assets/dragon-color.png — scripts/dragon-color.mjs). Multiply-
- * blended, so the white ground vanishes and the column grid shows through.
+ * The corner dragon — DESIGN.md §4 "ASCII dragon". Rests in the bottom-right,
+ * whole and slightly tilted: the colour Chinese dragon dithered into faint
+ * ink-3 dots (React Bits' DitherVeil, drawn from public/assets/dragon-color.png
+ * — scripts/dragon-color.mjs). Hover it (hover-capable pointers only) and the
+ * dots darken and a full-colour window opens under the cursor, knitting back
+ * into dots behind it. Multiply-blended, so the paper vanishes and the column
+ * grid shows through. Hidden until the veil has drawn its first real frame
+ * (before that its canvas is a flat box), then fades in.
  */
 export function CornerDragon() {
-  const [colors, setColors] = useState<{ ink: string; paper: string } | null>(null);
+  // The shader wants the token values, which live in CSS — client only.
+  const palette = useSyncExternalStore(noop, readPalette, () => null);
+  const [ready, setReady] = useState(false);
   const [active, setActive] = useState(false);
-
-  // Mount the veil hidden, so it's already drawn when the first hover lands.
-  useEffect(() => {
-    if (!window.matchMedia("(hover: hover)").matches) return;
-    const id = window.setTimeout(
-      () => setColors({ ink: token("--color-ink-3"), paper: token("--color-paper") }),
-      1500,
-    );
-    return () => window.clearTimeout(id);
-  }, []);
+  const [ink, paper] = palette?.split(" ") ?? [];
 
   const enter = (e: React.PointerEvent) => {
     if (e.pointerType === "touch") return;
@@ -49,19 +48,13 @@ export function CornerDragon() {
         onPointerEnter={enter}
         onPointerLeave={() => setActive(false)}
       >
-        <pre
-          className={cn(
-            "type-ascii-lg text-ink-3 transition-opacity duration-500 ease-out-strong",
-            active ? "opacity-0" : "opacity-30",
-          )}
-        >
-          {asciiDragon}
-        </pre>
-        {colors && (
+        {/* Never shown: the ASCII art only gives the dragon its frame. */}
+        <pre className="type-ascii-lg invisible">{asciiDragon}</pre>
+        {palette && (
           <div
             className={cn(
               "absolute inset-0 transition-opacity duration-500 ease-out-strong",
-              active ? "opacity-100" : "opacity-0",
+              !ready ? "opacity-0" : active ? "opacity-100" : "opacity-25",
             )}
           >
             <DitherVeil
@@ -70,14 +63,15 @@ export function CornerDragon() {
               intro={false}
               pattern="floyd"
               pixelSize={2}
-              inkColor={colors.ink}
-              paperColor={colors.paper}
+              inkColor={ink}
+              paperColor={paper}
               contrast={1.3}
               brightness={-0.08}
               revealRadius={150}
               softness={0.6}
               linger={1.4}
               clickBurst={false}
+              onReady={() => setReady(true)}
             />
           </div>
         )}

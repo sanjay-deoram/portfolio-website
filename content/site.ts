@@ -122,7 +122,7 @@ export const experience: Role[] = [
     navLabel: "PVX Plus",
     companyUrl: "https://home.pvxplus.com",
     logo: { src: "/assets/logos/pvx-plus.png", width: 152, height: 152 },
-    summary: "Modernizing the PxPlus language and building AI agents for PxPlus developers.",
+    summary: "pxplus language (c) + ai agents",
   },
   {
     id: "mpac",
@@ -131,8 +131,7 @@ export const experience: Role[] = [
     company: "MPAC",
     companyUrl: "https://www.mpac.ca",
     logo: { src: "/assets/logos/mpac.svg", width: 580, height: 160 },
-    summary:
-      "Building software for the Municipal Property Assessment Corporation, the organization that assesses every property in Ontario.",
+    summary: "property assessment for all of ontario, python + react + aws",
   },
   {
     id: "nventure",
@@ -141,8 +140,7 @@ export const experience: Role[] = [
     company: "Nventure",
     companyUrl: "https://www.nventure.ca",
     logo: { src: "/assets/logos/nventure.png", width: 100, height: 100 },
-    summary:
-      "Automated client file processing with Python on AWS Lambda, S3 and SharePoint, saving 180 manual hours a quarter. Built a Next.js scheduler for Instagram stories and podcasts.",
+    summary: "automation + ai, python + react + aws",
   },
   {
     id: "windsurf",
@@ -151,8 +149,7 @@ export const experience: Role[] = [
     company: "Windsurf (Codeium)",
     companyUrl: "https://windsurf.com",
     logo: { src: "/assets/logos/windsurf.svg", width: 24, height: 24 },
-    summary:
-      "Made 25+ short-form videos a month on new features and tips, reaching 100K+ monthly views.",
+    summary: "short-form content, 100k+ views a month",
   },
   {
     id: "rubicon",
@@ -161,8 +158,7 @@ export const experience: Role[] = [
     company: "Rubicon",
     companyUrl: "https://www.tryrubicon.com",
     logo: { src: "/assets/logos/rubicon.svg", width: 24, height: 24 },
-    summary:
-      "Built a Freedom of Information request system in React, Flask, Stripe and Twilio that handled 1,000+ requests in its first three months.",
+    summary: "law enforcement services, react + flask + stripe",
   },
 ];
 

@@ -60,9 +60,11 @@ function RoleDetails({ role }: { role: Role }) {
     <div className="flex items-start gap-4">
       <LogoTile logo={role.logo} fallback={role.company} />
       <div className="flex flex-col gap-1">
-        <h3 className="type-heading-sm text-ink">{role.title}</h3>
-        <CompanyLink role={role} className="type-label w-fit text-ink-3 underline-offset-2" />
-        {role.summary ? <p className="type-body-sm mt-2 text-ink-2">{role.summary}</p> : null}
+        <h3 className="type-heading-sm text-ink">
+          {role.title} <span className="text-ink-3">@</span>{" "}
+          <CompanyLink role={role} className="underline-offset-2" />
+        </h3>
+        {role.summary ? <p className="type-body-sm text-ink-2">{role.summary}</p> : null}
       </div>
     </div>
   );

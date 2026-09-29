@@ -140,7 +140,7 @@ Vertical rhythm (px):
 
 | Gap                               | Mobile | ≥ md |
 | --------------------------------- | ------ | ---- |
-| Page top → hero name              | 216    | 200  |
+| Page top → hero name              | 136    | 128  |
 | Hero → #education                 | 40     | 48   |
 | Between featured projects         | 48     | 96   |
 | Media card → its meta row         | 24     | 32   |

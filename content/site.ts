@@ -42,7 +42,7 @@ export const site = {
 
 
   meta: {
-    title: "Sanjay Deoram — Software Developer",
+    title: "Sanjay Deoram · Engineer & Builder",
     description:
       "Software developer in Toronto. I turn messy workflows into software that just works.",
   },

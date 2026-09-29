@@ -41,7 +41,7 @@ export function CornerDragon() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed right-6 bottom-6 z-0 origin-bottom-right -rotate-3 mix-blend-multiply select-none"
+      className="pointer-events-none fixed right-6 bottom-6 z-0 origin-bottom-right -rotate-3 mix-blend-multiply select-none max-md:opacity-30"
     >
       <div
         className="relative [@media(hover:hover)]:pointer-events-auto"

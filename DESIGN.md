@@ -118,7 +118,8 @@ utilities (JetBrains Mono, line-height 1, `white-space: pre`); a glyph is 0.6em 
   until it has drawn its first frame with the image (its opaque canvas is a flat ink box before
   that), then fades in (500ms `ease-out-strong`). Hover (hover-capable pointers only): the dots
   go to full opacity (500ms `ease-out-strong`) and a 150px full-colour window follows the cursor,
-  knitting back into dots over 1.4s.
+  knitting back into dots over 1.4s. Below md it is at 30% of that opacity (`max-md:opacity-30`), full size, so it stays a quiet
+  backdrop on phones.
 - **Embers**: 18 ASCII sparks (`. ' * + ,`) in a `fixed inset-0 overflow-hidden` layer,
   two thirds spread over x 55–98% (near the corner dragon), the rest 2–42%; positions
   and timings come from a seeded PRNG so server and client agree. `type-ascii-md`, scaled
@@ -140,7 +141,7 @@ Vertical rhythm (px):
 
 | Gap                               | Mobile | ≥ md |
 | --------------------------------- | ------ | ---- |
-| Page top → hero name              | 136    | 128  |
+| Page top → hero name              | 72     | 128  |
 | Hero → #education                 | 40     | 48   |
 | Between featured projects         | 48     | 96   |
 | Media card → its meta row         | 24     | 32   |

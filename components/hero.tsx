@@ -13,7 +13,7 @@ export function Hero() {
   const [experienceLink, projectsLink, resumeLink] = nav;
 
   return (
-    <section id="about" className="relative pt-[136px] md:pt-[128px]">
+    <section id="about" className="relative pt-[72px] md:pt-[128px]">
       <div className="flex flex-col gap-12 md:flex-row md:items-start md:gap-[165px] md:px-4">
         {/* Left column */}
         <div className="flex w-[172px] flex-col gap-3 motion-safe:animate-fade-up md:w-[203px] md:gap-3">

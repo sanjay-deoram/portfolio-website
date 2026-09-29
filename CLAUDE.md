@@ -40,7 +40,7 @@ app/
   page.tsx          section order: BackdropGrid, SideNav, AsciiDragon, TopFade, Hero, Education, Experience, Work, Footer
   fonts.ts          next/font/google loaders (Stack Sans Headline, Figtree, JetBrains Mono)
   globals.css       @theme tokens + type-* utilities + base layer + branched-menu styles
-  icon.svg          favicon
+  icon.png          favicon (square crop of the avatar photo)
 components/
   hero.tsx, work.tsx, experience.tsx, footer.tsx   the page sections (experience.tsx exports Experience and Education)
   side-nav.tsx, nav/branched-menu.tsx               scroll-spy side menu (≥1280px), port of React Bits' Branched Menu

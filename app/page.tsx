@@ -4,6 +4,7 @@ import { Hero } from "@/components/hero";
 import { Work } from "@/components/work";
 import { Education, Experience } from "@/components/experience";
 import { Footer } from "@/components/footer";
+import { GithubGraph } from "@/components/github-graph";
 import { SideNav } from "@/components/side-nav";
 import { AsciiDragon } from "@/components/ascii-dragon";
 
@@ -20,6 +21,7 @@ export default function Home() {
           <Education />
           <Experience />
           <Work />
+          <GithubGraph />
         </main>
         <Footer />
       </div>

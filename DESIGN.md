@@ -147,7 +147,8 @@ Vertical rhythm (px):
 | Media card → its meta row         | 24     | 32   |
 | #education → #experience          | 40     | 48   |
 | #experience → #projects           | 64     | 72   |
-| Last section → footer separator   | 200    | 200  |
+| #projects → #github               | 64     | 96   |
+| #github → footer separator        | 64     | 96   |
 | Footer bottom padding             | 154    | 48   |
 
 ## 5. Components
@@ -217,8 +218,23 @@ beside the arrow. Separator after the row.
   - `<Separator />` between rows (not after the last)
 - Then a second group with heading "Education", same row anatomy.
 
+### GitHub graph (`#github`)
+Last section of `<main>`, `mt-16 md:mt-24` after #projects (the footer mirrors it with `pt-16 md:pt-24`) (`components/github-graph.tsx`).
+A server component that reads GitHub's public contributions calendar
+(`github.com/users/<username>/contributions`, no token) with `revalidate: 86400`; if the
+fetch or parse fails the section renders nothing.
+- Header row (`md:px-4`, `justify-between`): "Github" `type-label text-ink-3` linking to the
+  profile; total `type-label text-ink-3` — "N contributions in the last year" (md),
+  "N contributions" (mobile).
+- Grid: inline SVG, 10px cells on a 13px step, `rx=2`, scaled to the content width. Desktop
+  shows all 53 weeks; mobile the last 26 so cells stay legible. Fills (tokens only):
+  level 0 `fill-surface-2`, 1 `fill-ink/20`, 2 `fill-ink/45`, 3 `fill-ink/70`, 4 `fill-ink`.
+  Each cell carries a `<title>` with its count and date. `aria-hidden` — the total is the text equivalent.
+- Legend, right-aligned: "less" ▪▪▪▪▪ "more" in `type-label text-ink-3`.
+- No motion. Copy lives in `github` in `content/site.ts`.
+
 ### Footer
-`flex-col gap-6 pt-[200px] pb-[154px] md:pb-12` → `<Separator />` → row
+`flex-col gap-6 pt-16 pb-[154px] md:pt-24 md:pb-12` → `<Separator />` → row
 (`md:flex-row md:items-center md:justify-between md:px-4`):
 - md: `type-label text-ink-3` "©{year} Sanjay Deoram | All rights reserved"
 - links `flex gap-4`, each `type-label text-ink underline-offset-4 hover:underline`,
@@ -337,5 +353,6 @@ Don't rename without updating the tests.
 | `experience-row` | = `experience.length + education.length` |
 | `footer-link` | 4 |
 | `section#education` | 1 |
+| `section#github` | 0–1 (absent if GitHub is unreachable at build) |
 | `side-nav` | visible on desktop ≥ 1280px, hidden on mobile |
 | `side-nav-item` | = projects + experience + education |

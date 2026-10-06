@@ -36,12 +36,13 @@ and eyeball the screenshots.
 ```
 app/
   layout.tsx        root layout, metadata, font variables on <html>
-  page.tsx          section order: BackdropGrid, SideNav, AsciiDragon, TopFade, Hero, Education, Experience, Work, Footer
+  page.tsx          section order: BackdropGrid, SideNav, AsciiDragon, TopFade, Hero, Education, Experience, Work, GithubGraph, Footer
   fonts.ts          next/font/google loaders (Stack Sans Headline, Figtree, JetBrains Mono)
   globals.css       @theme tokens + type-* utilities + base layer + branched-menu styles
   icon.png          favicon (square crop of the avatar photo)
 components/
   hero.tsx, work.tsx, experience.tsx, footer.tsx   the page sections (experience.tsx exports Experience and Education)
+  github-graph.tsx                                  contribution graph (server component, fetches GitHub daily, renders nothing on failure)
   side-nav.tsx, nav/branched-menu.tsx               scroll-spy side menu (≥1280px), port of React Bits' Branched Menu
   backdrop-grid.tsx, top-fade.tsx                   fixed decorative layers
   ascii-dragon.tsx                                  ASCII dragon layer: corner dragon + embers (CSS only), plus:
@@ -50,7 +51,7 @@ components/
   ascii-dragon-*art.ts                              generated art (corner, head) — don't edit; each records its command
   ui/pill.tsx, ui/separator.tsx, ui/icons.tsx        shared primitives
 content/
-  site.ts           ALL copy + data (projects, experience, education, nav, sideNav, socials).
+  site.ts           ALL copy + data (projects, experience, education, nav, sideNav, socials, github).
                     `id` fields become anchors: #project-<id>, #experience-<id>, #education-<id>
 lib/cn.ts           className joiner
 scripts/ascii-art.mjs         image → ASCII art (source: scripts/dragon-source.png; see the art files' headers)

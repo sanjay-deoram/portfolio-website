@@ -56,9 +56,22 @@ export const nav: NavLink[] = [
 
 export const socials: NavLink[] = [
   { label: "Linkedin", href: "https://www.linkedin.com/in/sanjaydeoram/", external: true },
-  { label: "Github", href: "https://github.com/BrandonDeoram", external: true },
+  { label: "Github", href: "https://github.com/sanjay-deoram", external: true },
   { label: "Youtube", href: "https://www.youtube.com/@sanjay_deoram", external: true },
 ];
+
+// Contribution graph above the footer. Data is read from GitHub's public
+// contributions calendar at build time and refreshed daily.
+export const github = {
+  username: "sanjay-deoram",
+  href: "https://github.com/sanjay-deoram",
+  heading: "Github",
+  // "{n}" is replaced with the total for the last year.
+  total: "{n} contributions in the last year",
+  totalShort: "{n} contributions", // mobile, where the graph shows half a year
+  less: "less",
+  more: "more",
+} as const;
 
 export const projects: Project[] = [
   {
@@ -77,7 +90,7 @@ export const projects: Project[] = [
     title: "One upload,\nevery platform",
     description:
       "Upload, schedule and track short-form video across YouTube, Instagram and X from a single dashboard.",
-    href: "https://github.com/BrandonDeoram/MultiPost",
+    href: "https://github.com/sanjay-deoram/MultiPost",
     image: { src: "/assets/projects/multipost.png", width: 1920, height: 966, frame: "window" },
     featured: true,
   },
@@ -87,7 +100,7 @@ export const projects: Project[] = [
     title: "Talk to your\ndocuments",
     description:
       "Upload a document and ask it questions. Answers come from GPT, grounded in what you gave it.",
-    href: "https://github.com/BrandonDeoram/AskDocAI",
+    href: "https://github.com/sanjay-deoram/AskDocAI",
     image: { src: "/assets/projects/askdocai.png", width: 1918, height: 982, frame: "window" },
     featured: true,
   },
@@ -96,7 +109,7 @@ export const projects: Project[] = [
     name: "Geass",
     title: "Anime\nwatch list",
     description: "Track what you're watching, what you've finished and what's next.",
-    href: "https://github.com/BrandonDeoram/GeassAnimeWebsite",
+    href: "https://github.com/sanjay-deoram/GeassAnimeWebsite",
     image: { src: "/assets/projects/geass.png", width: 800, height: 594, frame: "window" },
     featured: false,
   },
@@ -105,7 +118,7 @@ export const projects: Project[] = [
     name: "GoatApp",
     title: "Sneaker price\ncomparison",
     description: "A Flutter app that compares resale prices across StockX and GOAT.",
-    href: "https://github.com/BrandonDeoram/GoatApp",
+    href: "https://github.com/sanjay-deoram/GoatApp",
     image: { src: "/assets/projects/goatapp-phone.png", width: 552, height: 982, frame: "phone" },
     featured: false,
   },

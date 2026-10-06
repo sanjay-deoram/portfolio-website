@@ -10,7 +10,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="flex flex-col gap-6 px-0 pt-[200px] pb-[154px] md:pb-12">
+    <footer className="flex flex-col gap-6 px-0 pt-16 pb-[154px] md:pt-24 md:pb-12">
       <Separator />
       <div className="flex flex-col gap-4 px-0 md:flex-row md:items-center md:justify-between md:px-4">
         <p className="hidden type-label text-ink-3 md:block">

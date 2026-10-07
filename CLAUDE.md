@@ -43,6 +43,7 @@ app/
 components/
   hero.tsx, work.tsx, experience.tsx, footer.tsx   the page sections (experience.tsx exports Experience and Education)
   github-graph.tsx                                  contribution graph (server component, fetches GitHub daily, renders nothing on failure)
+  contribution-grid.tsx                             the graph's SVG + hover tooltip (client); shared constants in lib/contributions.ts
   side-nav.tsx, nav/branched-menu.tsx               scroll-spy side menu (≥1280px), port of React Bits' Branched Menu
   backdrop-grid.tsx, top-fade.tsx                   fixed decorative layers
   ascii-dragon.tsx                                  ASCII dragon layer: corner dragon + embers (CSS only), plus:

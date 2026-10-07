@@ -71,6 +71,8 @@ export const github = {
   totalShort: "{n} contributions", // mobile, where the graph shows half a year
   less: "less",
   more: "more",
+  // Hover tooltip on a day cell; the date follows in a lighter tone.
+  tooltip: { none: "No contributions", one: "1 contribution", many: "{n} contributions" },
 } as const;
 
 export const projects: Project[] = [

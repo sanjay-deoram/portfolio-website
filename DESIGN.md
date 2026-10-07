@@ -229,9 +229,16 @@ fetch or parse fails the section renders nothing.
 - Grid: inline SVG, 10px cells on a 13px step, `rx=2`, scaled to the content width. Desktop
   shows all 53 weeks; mobile the last 26 so cells stay legible. Fills (tokens only):
   level 0 `fill-surface-2`, 1 `fill-ink/20`, 2 `fill-ink/45`, 3 `fill-ink/70`, 4 `fill-ink`.
-  Each cell carries a `<title>` with its count and date. `aria-hidden` — the total is the text equivalent.
+  `aria-hidden` — the total is the text equivalent. The grid is a client component
+  (`components/contribution-grid.tsx`); shared constants live in `lib/contributions.ts`.
+- Tooltip (mouse pointers only): hovering a day shows a `rounded-pill bg-ink` pill,
+  `type-label text-paper` count + `text-paper/60` date ("12 contributions Apr 8, 2026"),
+  6px above the cell, `shadow-card`; a 1px `stroke-ink` ring is drawn in the gap around the
+  hovered cell. Pointer position is resolved to the nearest cell, so the gaps don't flicker it.
+  Centred over the cell; within 6 columns of either edge it hugs the cell instead (scales
+  from that corner).
 - Legend, right-aligned: "less" ▪▪▪▪▪ "more" in `type-label text-ink-3`.
-- No motion. Copy lives in `github` in `content/site.ts`.
+- Motion: see §6 (tooltip). Copy lives in `github` in `content/site.ts`.
 
 ### Footer
 `flex-col gap-6 pt-16 pb-[154px] md:pt-24 md:pb-12` → `<Separator />` → row
@@ -318,6 +325,7 @@ can't be moved any other way. Continuous travel (glare, embers) is
 | Hover | Pill bg `glass → surface-2` | 200ms `ease` (color) |
 | Press | Pills & buttons `scale(0.97)` | 160ms `ease-out-strong` |
 | Copy email | label crossfade with `blur(2px)` bridge | 200ms `ease` |
+| Hover | GitHub **tooltip** enters `opacity 0→1`, `scale 0.96→1`, `translateY 2px→0` from the edge nearest the cell (`@starting-style` on first mount); the ring fades in with it. Moving cell to cell is instant — no re-animation | enter 150ms, exit 100ms `ease-out-strong` |
 
 **Block reveal implementation:** render the real text normally; overlay an
 `aria-hidden` duplicate absolutely on top (`inset-0`) whose inner span has

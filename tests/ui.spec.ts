@@ -176,3 +176,28 @@ test.describe("motion (reduced motion off)", () => {
     expect(roleText).toContain(site.role);
   });
 });
+
+test.describe("github graph", () => {
+  test("hovering a day shows its tooltip", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop", "mouse-only tooltip");
+
+    await goto(page);
+    const section = page.locator("section#github");
+    // The graph renders nothing if GitHub can't be reached at build time.
+    test.skip((await section.count()) === 0, "graph not rendered (GitHub unreachable)");
+
+    const svg = section.locator("svg:visible").first();
+    await svg.scrollIntoViewIfNeeded();
+    const box = (await svg.boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + 2); // top row: the ring must not clip
+
+    const tip = section.locator("[data-open]");
+    await expect(tip).toBeVisible();
+    await expect(tip).toContainText(/contribution/i);
+    await expect(tip).not.toContainText("{n}");
+    await page.screenshot({ path: "test-results/screens/github-tooltip.png", clip: { x: box.x - 40, y: box.y - 60, width: box.width + 80, height: box.height + 80 } });
+
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height + 120);
+    await expect(tip).toHaveCount(0);
+  });
+});

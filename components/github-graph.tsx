@@ -1,6 +1,7 @@
 import { github } from "@/content/site";
+import { ContributionGrid } from "@/components/contribution-grid";
+import { CELL, STEP, levelFill, type Day } from "@/lib/contributions";
 
-type Day = { date: string; level: number; count: number };
 type Calendar = { total: number; weeks: (Day | null)[][] };
 
 // GitHub's public contributions calendar (no token needed). Each day is a
@@ -42,38 +43,6 @@ async function getCalendar(): Promise<Calendar | null> {
   }
 }
 
-// Level 0 sits on the hairline grey; 1–4 step up through ink. Tokens only.
-const levelFill = ["fill-surface-2", "fill-ink/20", "fill-ink/45", "fill-ink/70", "fill-ink"];
-
-const CELL = 10;
-const STEP = 13; // cell + 3 gap
-
-function Grid({ weeks, className }: { weeks: (Day | null)[][]; className: string }) {
-  const width = weeks.length * STEP - (STEP - CELL);
-  const height = 7 * STEP - (STEP - CELL);
-  return (
-    <svg viewBox={`0 0 ${width} ${height}`} className={className} aria-hidden="true">
-      {weeks.map((week, x) =>
-        week.map((day, y) =>
-          day ? (
-            <rect
-              key={day.date}
-              x={x * STEP}
-              y={y * STEP}
-              width={CELL}
-              height={CELL}
-              rx={2}
-              className={levelFill[day.level] ?? levelFill[0]}
-            >
-              <title>{`${day.count} on ${day.date}`}</title>
-            </rect>
-          ) : null,
-        ),
-      )}
-    </svg>
-  );
-}
-
 /** `#github` — contribution graph above the footer, drawn in DESIGN.md tokens. */
 export async function GithubGraph() {
   const calendar = await getCalendar();
@@ -100,8 +69,8 @@ export async function GithubGraph() {
 
       <div className="md:px-4">
         {/* Mobile: the last half year, so cells stay legible at 342px. */}
-        <Grid weeks={calendar.weeks.slice(-26)} className="block h-auto w-full md:hidden" />
-        <Grid weeks={calendar.weeks} className="hidden h-auto w-full md:block" />
+        <ContributionGrid weeks={calendar.weeks.slice(-26)} className="md:hidden" />
+        <ContributionGrid weeks={calendar.weeks} className="hidden md:block" />
       </div>
 
       <div className="flex items-center justify-end gap-2 md:px-4" aria-hidden="true">

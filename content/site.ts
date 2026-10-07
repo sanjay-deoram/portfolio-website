@@ -3,6 +3,10 @@
 
 export type NavLink = { label: string; href: string; external?: boolean };
 
+// Footer socials render as logos; `label` becomes the link's accessible name.
+export type SocialIcon = "linkedin" | "youtube" | "github" | "x" | "instagram" | "tiktok";
+export type Social = { label: string; href: string; icon: SocialIcon };
+
 export type Project = {
   id: string; // anchor: rendered as id="project-<id>", targeted by the side nav
   name: string; // small uppercase label
@@ -54,10 +58,14 @@ export const nav: NavLink[] = [
   { label: "Resume", href: "/SanjayDeoramResume.pdf", external: true },
 ];
 
-export const socials: NavLink[] = [
-  { label: "Linkedin", href: "https://www.linkedin.com/in/sanjaydeoram/", external: true },
-  { label: "Github", href: "https://github.com/sanjay-deoram", external: true },
-  { label: "Youtube", href: "https://www.youtube.com/@sanjay_deoram", external: true },
+// Footer order: email (the copy button, from `site.email`) comes first, then these.
+export const socials: Social[] = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/sanjaydeoram/", icon: "linkedin" },
+  { label: "YouTube", href: "https://www.youtube.com/@sanjay_deoram", icon: "youtube" },
+  { label: "GitHub", href: "https://github.com/sanjay-deoram", icon: "github" },
+  { label: "X (Twitter)", href: "https://x.com/Sanjay_Deoram", icon: "x" },
+  { label: "Instagram", href: "https://www.instagram.com/sanjaycodingchamp/", icon: "instagram" },
+  { label: "TikTok", href: "https://www.tiktok.com/@sanjay.deoram", icon: "tiktok" },
 ];
 
 // Contribution graph above the footer. Data is read from GitHub's public

@@ -1,9 +1,12 @@
 import { Separator } from "@/components/ui/separator";
 import { site, socials } from "@/content/site";
 import { CopyEmail } from "@/components/footer/copy-email";
+import { Glyph } from "@/components/ui/icons";
 
-const linkClasses =
-  "type-label text-ink underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
+// Logo links: ink-3 at rest, ink on hover (color, 200ms ease), scale(0.97) on
+// press (160ms ease-out-strong). p-1/-m-1 grows the hit area without moving the row.
+const iconLinkClasses =
+  "-m-1 rounded-sm p-1 text-ink-3 transition-[color,scale] duration-200 ease hover:text-ink active:scale-97 active:duration-160 active:ease-out-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 
 /** `<footer>` — DESIGN.md §5. */
 export function Footer() {
@@ -17,18 +20,19 @@ export function Footer() {
           ©{year} {site.name} | All rights reserved
         </p>
 
-        <div className="flex gap-4">
-          <CopyEmail email={site.email} className={linkClasses} />
+        <div className="flex items-center gap-4">
+          <CopyEmail email={site.email} className={iconLinkClasses} />
           {socials.map((social) => (
             <a
               key={social.href}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={social.label}
               data-testid="footer-link"
-              className={linkClasses}
+              className={iconLinkClasses}
             >
-              {social.label}
+              <Glyph name={social.icon} className="size-4.5" />
             </a>
           ))}
         </div>

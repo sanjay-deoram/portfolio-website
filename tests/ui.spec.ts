@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { site, projects, experience, education } from "@/content/site";
+import { site, projects, experience, education, socials } from "@/content/site";
 
 async function goto(page: Page) {
   await page.goto("/");
@@ -115,14 +115,27 @@ test.describe("experience", () => {
 });
 
 test.describe("footer", () => {
-  test("four visible footer links", async ({ page }) => {
+  test("email + one logo link per social, each named", async ({ page }) => {
     await goto(page);
     const links = page.getByTestId("footer-link");
     await links.first().scrollIntoViewIfNeeded();
-    await expect(links).toHaveCount(4);
-    for (let i = 0; i < 4; i++) {
-      await expect(links.nth(i)).toBeVisible();
+    await expect(links).toHaveCount(socials.length + 1);
+    await expect(links.first()).toHaveAccessibleName(/email/i);
+    for (const [i, social] of socials.entries()) {
+      const link = links.nth(i + 1);
+      await expect(link).toBeVisible();
+      await expect(link).toHaveAccessibleName(social.label);
+      await expect(link).toHaveAttribute("href", social.href);
     }
+  });
+
+  test("footer close-up screenshot", async ({ page }, testInfo) => {
+    await goto(page);
+    const footer = page.locator("footer");
+    await footer.scrollIntoViewIfNeeded();
+    // Hover the second logo so the screenshot shows the hover tone too.
+    if (testInfo.project.name === "desktop") await page.getByTestId("footer-link").nth(1).hover();
+    await footer.screenshot({ path: `test-results/screens/footer-${testInfo.project.name}.png` });
   });
 });
 

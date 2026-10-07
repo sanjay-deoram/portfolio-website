@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { cn } from "@/lib/cn";
+import { Glyph } from "@/components/ui/icons";
 
 type CopyEmailProps = {
   email: string;
@@ -11,10 +12,10 @@ type CopyEmailProps = {
 const RESET_DELAY_MS = 1600;
 
 /**
- * Footer "email" link (DESIGN.md §5/§6). Copies the address to the
- * clipboard and crossfades the label to "copied" for 1.6s. The two labels
- * are stacked in one grid cell so the crossfade never shifts layout width;
- * opacity + a `blur(2px)` bridge (200ms ease) smooths the swap.
+ * Footer email logo (DESIGN.md §5/§6). Copies the address to the clipboard
+ * and crossfades the envelope to a check for 1.6s. The two glyphs are stacked
+ * in one grid cell so the swap never shifts layout; opacity + scale + a
+ * `blur(2px)` bridge (200ms ease) smooths it.
  */
 export function CopyEmail({ email, className }: CopyEmailProps) {
   const [copied, setCopied] = useState(false);
@@ -44,25 +45,25 @@ export function CopyEmail({ email, className }: CopyEmailProps) {
       data-testid="footer-link"
       aria-label="Copy email address"
       onClick={handleClick}
-      className={cn("grid [&>*]:[grid-area:1/1]", className)}
+      className={cn("grid [&>*]:[grid-area:1/1]", copied && "text-ink", className)}
     >
       <span
         aria-hidden="true"
         className={cn(
-          "transition-[opacity,filter] duration-200 ease",
-          copied ? "opacity-0 blur-[2px]" : "opacity-100 blur-none",
+          "transition-[opacity,filter,scale] duration-200 ease",
+          copied ? "scale-75 opacity-0 blur-[2px]" : "scale-100 opacity-100 blur-none",
         )}
       >
-        email
+        <Glyph name="email" className="size-4.5" />
       </span>
       <span
         aria-hidden="true"
         className={cn(
-          "transition-[opacity,filter] duration-200 ease",
-          copied ? "opacity-100 blur-none" : "opacity-0 blur-[2px]",
+          "transition-[opacity,filter,scale] duration-200 ease",
+          copied ? "scale-100 opacity-100 blur-none" : "scale-75 opacity-0 blur-[2px]",
         )}
       >
-        copied
+        <Glyph name="check" className="size-4.5" />
       </span>
       <span aria-live="polite" className="sr-only">
         {copied ? "Email address copied" : ""}

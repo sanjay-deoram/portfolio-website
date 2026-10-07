@@ -244,9 +244,12 @@ fetch or parse fails the section renders nothing.
 `flex-col gap-6 pt-16 pb-[154px] md:pt-24 md:pb-12` → `<Separator />` → row
 (`md:flex-row md:items-center md:justify-between md:px-4`):
 - md: `type-label text-ink-3` "©{year} Sanjay Deoram | All rights reserved"
-- links `flex gap-4`, each `type-label text-ink underline-offset-4 hover:underline`,
-  `data-testid="footer-link"`: **email** (a `<button>` that copies the address; label
-  crossfades to "copied" for 1.6s), LinkedIn, GitHub, YouTube
+- logo links `flex items-center gap-4`, each an 18px (`size-4.5`) solid glyph in
+  `currentColor` (`Glyph` in `components/ui/icons.tsx`), `text-ink-3 hover:text-ink`,
+  `p-1 -m-1` hit area, `aria-label` from `socials[].label`, `data-testid="footer-link"`:
+  **email** (a `<button>` that copies the address; the envelope crossfades to a check, in
+  `text-ink`, for 1.6s), LinkedIn, YouTube, GitHub, X, Instagram, TikTok. Glyphs: Simple
+  Icons (CC0); LinkedIn, envelope and check from Font Awesome Free (CC BY 4.0).
 - mobile: copyright stacked on two lines at `text-[12px] leading-[14px]`
 
 ### Side nav (Branched Menu) — desktop ≥ 1280px only
@@ -324,7 +327,8 @@ can't be moved any other way. Continuous travel (glare, embers) is
 | Hover | Arrow icon nudges `translate(2px,-2px)` | 200ms `ease-out-strong` |
 | Hover | Pill bg `glass → surface-2` | 200ms `ease` (color) |
 | Press | Pills & buttons `scale(0.97)` | 160ms `ease-out-strong` |
-| Copy email | label crossfade with `blur(2px)` bridge | 200ms `ease` |
+| Copy email | envelope → check crossfade, `scale 0.75 ↔ 1` with a `blur(2px)` bridge | 200ms `ease` |
+| Hover / press | Footer logos `ink-3 → ink`; press `scale(0.97)` | 200ms `ease` (color); press 160ms `ease-out-strong` |
 | Hover | GitHub **tooltip** enters `opacity 0→1`, `scale 0.96→1`, `translateY 2px→0` from the edge nearest the cell (`@starting-style` on first mount); the ring fades in with it. Moving cell to cell is instant — no re-animation | enter 150ms, exit 100ms `ease-out-strong` |
 
 **Block reveal implementation:** render the real text normally; overlay an
